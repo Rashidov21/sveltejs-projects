@@ -1,0 +1,585 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+{% block content %}
+      <!-- adminx-content-aside -->
+      <div class="adminx-content">
+        <!-- <div class="adminx-aside">
+
+        </div> -->
+
+        <div class="adminx-main-content">
+          <div class="container-fluid">
+            <!-- BreadCrumb -->
+            <nav aria-label="breadcrumb" role="navigation">
+              <ol class="breadcrumb adminx-page-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Bosh panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tovar qo'shish</li>
+              </ol>
+            </nav>
+
+
+
+            <div class="pb-3">
+              <h1>Tovar qo'shish</h1>
+            </div>
+        
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="card mb-grid">
+                  <div class="card-header">
+                    <div class="card-header-title">Tovar katalogini tanlang</div>
+                  </div>
+                  <div class="card-body">
+                    <form action="" method="post">
+                    <div class="form-group">
+                      <label class="form-label">Asosiy katalog</label>
+                      <select name="category" required onclick="SearchSubCategory(this.value)" id="categories" class="form-control js-choice">
+                        <option  selected disabled>--- -- ---</option>
+                        
+                        {% for c in categories %}
+                   
+                     
+                   
+                        <option value="{{ c.id }}">{{ c }}</option>
+               
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" id="subcategory_info">Qo'shimcha katalog</label>
+                      <select name="subcategory" id="subcategories" class="form-control js-choice">
+                        <option value="">Avval asosiy katologni tanlang</option>
+                      
+                      </select>
+                    </div>
+
+
+                  </div>
+                  <div class="card-footer">
+                    Avval tovarni asosiy katalogini tanlang, keyin katalog osti katalogni. Masalan: Adabiyotlar &gt;Jahon adabiyotlari &gt;Tovar nomi
+                  </div>
+                </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="card mb-grid">
+                  <div class="card-header">
+                    <div class="card-header-title">Tovar ma'lumotlari</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label class="form-label">Nomi</label>
+                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="Masalan: Shaytanat 2-tom" name="title" required>
+                    </div>
+                      <div class="form-group">
+                      <label class="form-label">Muallifi</label>
+                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="To'ldirish shart emas" name="author">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Nashriyoti</label>
+                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="Masalan: Yoshlar ijodi" name="edition">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Soni</label>
+                      <input class="form-control input-date mb-2" required type="number" placeholder="dona" name="quantity">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Narxi (kelishi) Faqat sonlar bilan yozilsin</label>
+                      <input class="form-control input-numeral mb-2" required type="number" placeholder="Sotib olinadigan narxi" name="pur_price">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Narxi (sotilishi) Faqat sonlar bilan yozilsin</label>
+                      <input class="form-control input-prefix mb-2" placeholder="Sotiladigan narxi" required type="text" name="cur_price">
+                    </div>
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <label class="form-label" id="providers_info">Yetkazib beruvchi (baza)</label>
+                      <label class="form-label" id="providers_info_twoo"></label>
+                      <select name="provider" id="providers" class="form-control js-choice">
+                        <option value="">--- -- ---</option>
+                    
+                      </select>
+                      <div align="right" class="mt-1">
+                     <div id="accordion" role="tablist">
+ <style>
+   .collapsed:hover{
+    color:red;
+    text-decoration: none;
+   }
+ </style>
+  <div class="card">
+    <div class="card-header" role="tab" id="headingTwo">
+      <h5 class="mb-0">
+        <a class="collapsed" id="accardion_btn" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Yetqazib beruvchi qo'shish +
+        </a>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="card-body">
+         <div class="form-group" align="left">
+        <label class="form-label" id="add_provider_name_info">Yetqazib beruvchi nomi</label>
+        <input class="form-control input-date mb-2" id="add_provider_field_name" type="text" placeholder="Yetqazib beruvchi nomi">
+      </div>
+
+       <div class="form-group" align="left">
+        <label class="form-label" id="add_provider_adress_info">Yetqazib beruvchi manzili</label>
+        <input class="form-control input-date mb-2" id="add_provider_field_adress" type="text" placeholder="Yetqazib beruvchi nomi">
+      </div>
+       <div class="form-group" align="left">
+        <label class="form-label" id="add_provider_phone_info">Yetqazib beruvchi telefoni</label>
+        <input class="form-control input-date mb-2" id="add_provider_field_phone" type="text" placeholder="Yetqazib beruvchi nomi">
+      </div>
+
+       <div class="card-footer">
+         <button type="button" id="add_provider_button" onclick="AddProvider();" class="btn btn-primary">Saqlash</button>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function AddProvider(){
+   
+  
+var add_provider_name_info = document.getElementById('add_provider_name_info');
+var add_provider_adress_info = document.getElementById('add_provider_adress_info');
+var add_provider_phone_info = document.getElementById('add_provider_phone_info');
+  
+
+var add_provider_field_name = document.getElementById('add_provider_field_name').value;
+var add_provider_field_phone = document.getElementById('add_provider_field_phone').value;
+var add_provider_field_adress = document.getElementById('add_provider_field_adress').value;
+
+
+
+if(add_provider_field_name.length == 0 ){
+  add_provider_info.innerHTML = "<font color='red'>Kerakli ma'lumot kiritilmadi!</font>";
+
+
+}else if(add_provider_field_phone.length == 0 ){
+  add_provider_phone_info.innerHTML = "<font color='red'>Kerakli ma'lumot kiritilmadi!</font>";
+  
+}
+else if(add_provider_field_adress.length == 0 ){
+  add_provider_adress_info.innerHTML = "<font color='red'>Kerakli ma'lumot kiritilmadi!</font>";
+  
+}else{
+
+  add_provider_name_info.innerHTML = "Yetqazib beruvchi nomi";
+  add_provider_phone_info.innerHTML = "Yetqazib beruvchi telefoni";
+  add_provider_adress_info.innerHTML = "Yetqazib beruvchi manzili";
+
+  var valu = {name:add_provider_field_name,adress:add_provider_field_adress,phone:add_provider_field_phone}
+      var value = JSON.stringify(valu);
+    if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    var data = JSON.parse(this.responseText);
+    console.log(data);
+    if(data.status == 'ok'){
+      document.getElementById('providers_info_twoo').innerHTML="<font color='green'>Yangi ma'lumot qo'shildi</font>";
+      document.getElementById('accardion_btn').click();
+      DownloadProviders();
+
+    }else{
+      document.getElementById('providers_info').innerHTML="<font color='red'>Yetkazib beruvchi (Ma'lumot qo'shishda xatolik yuz berdi)</font>";
+      document.getElementById('accardion_btn').click();
+    }
+    
+    }
+  }
+  var url = "{% url 'books:add_provider' %}"
+  var url = url+"?q="+value;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.send();
+} 
+}
+
+</script>
+
+
+
+
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Qo'shimcha ma'lumot</label>
+                      <input class="form-control input-prefix mb-2" name="info" type="text">
+                    </div>
+                  
+                  </div>
+                  <div class="card-footer">
+                 
+                     <input type="submit" class="btn btn-primary" value="Qoshish">
+                  </div>
+                  </form>
+                </div>
+                </div>
+              </div>
+
+              {% if page_object %}
+              <div class="pb-1">
+              <h3>Tekshirilmagan tovarlar</h3>
+              <div class="row">
+                <div class="col-md-9">
+                  <ul class="list-unstyled">
+                <li class="d-inline-block">
+                  <a href="#" class="btn btn-light btn-md" title="Ro'yhatga olish ID raqami">
+                    Tovar kirim ID: 456
+                  </a>
+                </li>
+                <li class="d-inline-block">
+                   <a href="#" class="btn btn-light btn-md" title="Tovarlar ro'yhatga olingan sana">
+                    Sana: 21/08/2020
+                  </a>
+                </li>
+                <li class="d-inline-block">
+                   <!-- <a href="#" class="badge" title="Tasdiqlash"> -->
+                    <div class="form-group">
+                      <label class="form-label">Tekshirildi </label>
+                      <input type="checkbox" name="check">
+                    </div> 
+                  <!--</a>-->
+                </li>
+                 <li class="d-inline-block">
+                   <!-- <a href="#" class="badge" title="Tasdiqlash"> -->
+                    <div class="form-group">
+                      <input class="btn btn-success btn-small" type="submit" value="Tasdiqlash"> 
+              
+                    </div> 
+                  <!--</a>-->
+                </li>
+
+              </ul>
+                </div>
+                <div class="col-md-3">
+                  <ul class="list-unstyled">
+                <li class="d-inline-block">
+                  <a href="#" class="btn btn-info btn-md" title="PDF ko'rinishida saqlash">
+                    <i data-feather="save"></i>
+                  </a>
+                </li>
+                <li class="d-inline-block">
+                   <a href="#" class="btn btn-info btn-md" title="Chop etish">
+                    <i data-feather="printer"></i>
+                  </a>
+                </li>
+                <li class="d-inline-block">
+                   <a href="#" class="btn btn-info btn-md"  title="PDF ko'rinishida yuborish">
+                    <i data-feather="share"></i>
+                  </a>
+                </li>
+              </ul>
+                </div>
+              </div>
+              
+            </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="card mb-grid">
+                  <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header-title">Ro'yhatga olingan tovarlar</div>
+                  </div>
+                  <div class="table-responsive-sm">
+                    <table class="table table-actions table-striped table-hover mb-0">
+                      <thead>
+                        <tr class="text-center">
+                          <th scope="col">
+                            <label class="custom-control custom-checkbox m-0 p-0">
+                              <input type="checkbox" class="custom-control-input table-select-all">
+                              <span class="custom-control-indicator"></span>
+                            </label>
+                          </th>
+                          <th scope="col">Nomi</th>
+                          <th scope="col">Kategoriyasi</th>
+                          <th scope="col">Muallifi</th>
+                          <th scope="col">Nashriyoti</th>
+                          <th scope="col">Omborda</th>
+                          <th scope="col">Narxi(K)</th>
+                          <th scope="col">Narxi(S)</th>
+                          <th scope="col">Tahrirlash</th>
+                        </tr>
+                      </thead>
+                      <tbody style="color:black;font-weight:700;">
+                          {% for product in page_object %}
+                          <tr class="text-center">
+                          <th scope="row">
+                            <label class="custom-control custom-checkbox m-0 p-0">
+                              <input type="checkbox" class="custom-control-input table-select-row">
+                              <span class="custom-control-indicator"></span>
+                            </label>
+                          </th>
+                      
+                          <td>{{ product.title }}</td>
+                          <td>{{ product.category }}</td>
+                          <td>{{ product.edition }}</td>
+                          <td>{{ product.quantity }}</td>
+                          <td>{{ product.pur_price }}</td>
+                          <td>{{ product.cur_price }}</td>
+                          <td>{{ product.add_date|date:"Y-m-d" }}</td>
+
+                            <td>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal3" title="Tanlangan tovarni tahrirlash"><i data-feather="edit"></i></button>
+                            <button class="btn btn-sm btn-danger" onclick="playSound('bing');" title="Tozarni savatchadan o'chirish"><i data-feather="trash"></i></button>
+                            <div id="sound"></div>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                  
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="pagination ml-2">
+                    
+                    <nav aria-label="...">
+  <ul class="pagination">
+
+    <li class="page-item {% if not prev_url %} disabled {% endif %}">
+      <a class="page-link" href="{{ prev_url }}" tabindex="-1">Oldingi saxifa</a>
+    </li>
+  
+  {% for n in page_object.paginator.page_range  %}
+   
+      {% if page_object.number == n %}
+    <li class="page-item active">
+      <a class="page-link" href="?page={{ n }}">{{ n }} <span class="sr-only">(current)</span></a>
+    </li>
+    {% elif n > page_object.number|add:-3 and n < page_object.number|add:3%}
+    <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
+    {% endif %}
+    {% endfor %}
+    <li class="page-item {% if not next_url %} disabled {% endif %}">
+      <a class="page-link" href="{{ next_url }}">Keyingi saxifa</a>
+    </li>
+  </ul>
+</nav>
+                  </div>
+
+
+
+
+
+
+                </div>
+                </div>
+              </div>
+              <div class="row" style="background-color:#fff;">
+                <div class="col-md-12">
+                      <div class="container">
+                         <div class="card-header-title pt-4 pb-3">Tasdiqlandi</div>
+                      <div class="table-responsive" align="center">
+                            <table class="table">
+                                <tbody>                                          
+                                    <tr>
+                                        <th>Xodim:</th>
+                                        <th></th>                                        
+                                          <th>Imzo :</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                          <h3><i data-feather="info"></i> Tovarlarni qo'shish jarayoni tugaganidan so'ng ro'yhatni saqlashdan oldin barcha kiritilgan ma'lumotlar to'g'ri ekaniga ishonch hosil qiling.</h3>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+
+                {% endif %}
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModal3Label">Tahrirlash</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+               <div class="card mb-grid">
+                  <div class="card-header">
+                    <div class="card-header-title">Tahrirlash oynasi</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label class="form-label">Nomi</label>
+                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="Nomi">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Asosiy katalog</label>
+                      <select name="select" class="form-control js-choice">
+                        <option value="1">Sample value</option>
+                        <option value="2">Sample value 2</option>
+                        <option value="3">Sample value 3</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Qo'shimcha katalog</label>
+                      <select name="select" class="form-control js-choice">
+                        <option value="1">Sample value</option>
+                        <option value="2">Sample value 2</option>
+                        <option value="3">Sample value 3</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Qo'shimcha katalog</label>
+                      <select name="select" class="form-control js-choice">
+                        <option value="1">Sample value</option>
+                        <option value="2">Sample value 2</option>
+                        <option value="3">Sample value 3</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Muallifi</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder=" ">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Nashriyoti</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder=" ">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Kelish narxi</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder="UZS ">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Sotilish narxi</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder="UZS ">
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <p>Ushbu tahrirlash oynasi orqali savatchaga olingan tovarlarni narxlarini va donasini mijoz talabiga (kelishuvga asosan) o'zgartirish mumkin.</p>
+                  </div>
+                </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Yopish</button>
+        <button type="button" class="btn btn-primary">Saqlash</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+                  
+          <script>
+function SearchSubCategory(value){
+
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    var data = JSON.parse(this.responseText);
+    console.log(data);
+    if(data.subcategories.length == 0 ){ 
+    
+      document.getElementById("subcategory_info").innerHTML = "<font color='red'>Qo'shimcha kataloglar topilmadi</font>"; 
+   
+  var option="<option value=''>------------</option>";
+  document.getElementById("subcategories").innerHTML = option;
+    }
+    else {
+      document.getElementById("subcategory_info").innerHTML = "<font color=''>Qo'shimcha katalog</font>"; 
+  var option="<option selected disabled>"+data.subcategories.length+"-katolog topildi</option>";
+  
+      
+    for(var x=0; x<data.subcategories.length; x++){
+      option += "<option  id='id_student' value="+data.subcategories[x][0]+">"+data.subcategories[x][1]+"</option>";
+    }
+  document.getElementById("subcategories").innerHTML = option;
+   
+    }
+    }
+  }
+  var url = "{% url 'books:search_subcategory' %}"
+  var url = url+"?q="+value;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.send();
+}
+
+
+window.onload = DownloadProviders();
+function DownloadProviders(){
+
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    var data = JSON.parse(this.responseText);
+    console.log(data);
+    if(data.providers.length == 0 ){ 
+    
+      document.getElementById("providers_info").innerHTML = "<font color='red'>Yetqazib beruvchilar topilmadi</font>"; 
+   
+  var option="<option value=''>------------</option>";
+  document.getElementById("providers").innerHTML = option;
+    }
+    else {
+      document.getElementById("providers_info").innerHTML = "<font color=''>Yetqazib beruvchilar</font>"; 
+  var option="<option selected disabled>"+data.providers.length+"ta ma'lumot topildi</option>";
+  
+      
+    for(var x=0; x<data.providers.length; x++){
+      option += "<option  value="+data.providers[x][0]+">"+data.providers[x][1]+"</option>";
+    }
+  document.getElementById("providers").innerHTML = option;
+   
+    }
+    }
+  }
+  var url = "{% url 'books:download_providers' %}"
+  xmlhttp.open("GET",url,true);
+  xmlhttp.send();
+}
+
+
+
+
+// function CallAjax(value,url){
+//    if (window.XMLHttpRequest) {
+//     // code for IE7+, Firefox, Chrome, Opera, Safari
+//     xmlhttp=new XMLHttpRequest();
+//   } else {  // code for IE6, IE5
+//     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+//   }
+//   xmlhttp.onreadystatechange=function() {
+//     if (this.readyState==4 && this.status==200) {
+//     var data = JSON.parse(this.responseText);
+//     console.log(data);
+//     }
+//     return this.responseText;
+//   }
+//     var url = url+"?q="+value;
+//   xmlhttp.open("GET",url,true);
+//   xmlhttp.send();
+//     return xmlhttp.responseText;
+// }
+</script>
+  {% endblock %}

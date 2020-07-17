@@ -1,0 +1,186 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+{% block content %}
+      <!-- adminx-content-aside -->
+      <div class="adminx-content" >
+        <!-- <div class="adminx-aside">
+
+        </div> -->
+
+        <div class="adminx-main-content">
+          <div class="container-fluid">
+            <!-- BreadCrumb -->
+            <nav aria-label="breadcrumb" role="navigation">
+              <ol class="breadcrumb adminx-page-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Bosh panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chiqim</li>
+              </ol>
+            </nav>
+
+            <div class="pb-3">
+              <h1>Chiqim</h1>
+            </div>
+<!-- ak -->
+<style>
+  .price_input{
+    max-width: 55px;
+  }
+  .card-body>a:hover{
+    text-decoration: none;
+  }
+  .card-img>img:hover{
+    transform: scale(1.2);
+    transition: 0.3s;
+    /*zoom:1.5;*/
+  }
+  .total_price{
+    font-weight: 600;
+    font-size: 18px;
+    color: blue;
+    
+  }
+</style>
+
+  <div class="row">
+  <div class="container-fluid">
+    <div class="col">
+        <div class="card mb-grid w-100">
+          <div class="card-header">
+            <div class="d-flex justify-content-between mb-3">
+              <h3 class="card-title mb-0">
+                Barcha chiqimlar
+              </h3>
+              <div class="card-title-sub">
+                 <ul class="list-unstyled">
+                    <li class="d-inline-block">
+                      <a href="#" class="btn btn-info btn-md" title="PDF ko'rinishida saqlash">
+                        <i data-feather="save"></i>
+                      </a>
+                    </li>
+                    <li class="d-inline-block">
+                       <a href="#" class="btn btn-info btn-md" title="Chop etish">
+                        <i data-feather="printer"></i>
+                      </a>
+                    </li>
+                    <li class="d-inline-block">
+                       <a href="#" class="btn btn-info btn-md"  title="PDF ko'rinishida yuborish">
+                        <i data-feather="share"></i>
+                      </a>
+                    </li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card-body d-flex flex-column">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card-header">
+                      <h4>Chiqim (Bugun:  <span style="color:blue;">20/08/2020</span>)</h4>
+                </div>
+                <div class="table-responsive-sm">
+                    <table class="table table-actions table-striped table-hover mb-0">
+                      <thead>
+                        <tr>
+                          <th scope="col">
+                            <label class="custom-control custom-checkbox m-0 p-0">
+                              <input type="checkbox" class="custom-control-input table-select-all">
+                              <span class="custom-control-indicator"></span>
+                            </label>
+                          </th>
+                          <th scope="col">Chiqim soni</th>
+                          <th scope="col">Summasi</th>
+                          <th scope="col">Izohi</th>
+                        </tr>
+                      </thead>
+                      <tbody style="color:black;font-weight:700;">
+                        <tr>
+                          <th scope="row">
+                            <label class="custom-control custom-checkbox m-0 p-0">
+                              <input type="checkbox" class="custom-control-input table-select-row">
+                              <span class="custom-control-indicator"></span>
+                            </label>
+                          </th>
+                          <td>12</td>
+                          <td><b>UZS </b>45.000</td>                        
+                          <td>Ta'mirlash ishlari, yelim uchun.</td>
+                        </tr>
+                  
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card-footer text-right">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="total_price">
+                          <span style="color:blue;">Jami : 65.566 <i>UZS</i></span>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="total_price">
+                          <span style="color:blue;">Bu yilda : 65.566 <i>UZS</i></span>
+                        </div>
+                      </div>
+                    </div>                    
+                  </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card-header">
+                  <h4>Chiqimlar (Bu oyda:  <span style="color:blue;">08/2020</span>)</h4>
+                </div>
+                <div class="table-responsive-sm">
+                    <table class="table table-actions table-striped table-hover mb-0">
+                      <thead>
+                        <tr>
+                          <th scope="col">
+                            <label class="custom-control custom-checkbox m-0 p-0">
+                              <input type="checkbox" class="custom-control-input table-select-all">
+                              <span class="custom-control-indicator"></span>
+                            </label>
+                          </th>
+                          <th scope="col">Chiqimlar soni</th>
+                          <th scope="col">Summasi</th>
+                        </tr>
+                      </thead>
+                      <tbody style="color:black;font-weight:700;">
+                        <tr>
+                          <th scope="row">
+                            <label class="custom-control custom-checkbox m-0 p-0">
+                              <input type="checkbox" class="custom-control-input table-select-row">
+                              <span class="custom-control-indicator"></span>
+                            </label>
+                          </th>
+                          <td>124</td>
+                          <td><b>UZS </b>1545.000</td>                        
+                        </tr>
+                  
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card-footer text-right">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="total_price">
+                          <span style="color:blue;">Jami : 65.566 <i>UZS</i></span>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="total_price">
+                          <span style="color:blue;">Bu yilda : 65.566 <i>UZS</i></span>
+                        </div>
+                      </div>
+                    </div>                    
+                  </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+
+  {% endblock %}

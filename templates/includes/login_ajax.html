@@ -1,0 +1,48 @@
+<script>
+      function CheckLogin(str){  
+       console.log(str);                           
+  if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    var data = JSON.parse(this.responseText);
+    console.log(data);
+
+    var iks =  document.getElementById('iks');
+    var login_icon =  document.getElementById('login_icon');
+      var login_field = document.getElementById('login_field');
+      var login_info = document.getElementById('login_info');
+   if(data.email == 'ok'){
+
+   iks.style='dislay:none;opacity:0;';
+        login_field.style = "border:1px green solid;"
+        login_info.innerHTML=""
+        login_icon.style=" background:white;"
+
+      
+
+  
+   }else{
+        login_info.innerHTML="Bu login bilan ro'yxatdan o'tilmagan"
+        login_icon.style=" background:red;"
+
+   iks.style='dislay:block;';
+        login_field.style = "border:1px red solid;"
+  
+   }
+
+    }
+  }
+  var url = "{% url 'books:search_login' %}";
+  var url = url+"?q="+str;
+
+  xmlhttp.open("GET",url,true);
+  xmlhttp.send();
+
+}
+</script>

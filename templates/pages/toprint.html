@@ -1,0 +1,201 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+.content{
+    border-radius: 15px;
+}
+.invoice {
+    position: relative;
+    background: #fff;
+    border: 1px solid #f4f4f4;
+    padding: 30px;
+    margin: 10px 25px;
+}
+.page-header {
+    margin: 10px 0 20px 0;
+    font-size: 22px;
+}
+</style>
+      <!-- adminx-content-aside -->
+      <div class="adminx-content">
+        <!-- <div class="adminx-aside">
+
+        </div> -->
+
+        <div class="adminx-main-content">
+          <div class="container-fluid">
+            <!-- BreadCrumb -->
+            <nav aria-label="breadcrumb" role="navigation">
+              <ol class="breadcrumb adminx-page-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Bosh panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chop etish</li>
+              </ol>
+            </nav>
+
+            <div class="pb-3">
+              <h1>Chop etish</h1>
+            </div>
+            <section class="content content_content" style="width: 70%; margin: auto;">
+                    <section class="invoice">
+                        <!-- title row -->
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h2 class="page-header"  style="color:blue;">
+                                    <i class="fa fa-globe"></i> Nur-Ziyo (MChJ)
+                                    <small class="pull-right">Sana: 2020/08/09</small>
+                                </h2>
+                            </div><!-- /.col -->
+                        </div>
+                        <!-- info row -->
+                        <div class="row invoice-info">
+                            <div class="col-sm-4 invoice-col">
+                                Tashkilot nomi(dan)
+                                <address>
+                                    <strong>
+                                                                            </strong>
+                                </address>
+                            </div><!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                                Tashkilot nomi(ga)
+                                <address>
+                                    <strong>
+                                        Falonchi Fistonchi                                    </strong>
+                                    <br>
+                                    Manzil:
+                                    Andijon                                    <br>
+                                    Telefon:
+                                    123456789                                   <br>
+                                    Email:ggggg@gmail.com                                </address>
+                            </div><!-- /.col -->
+                            <div class="col-sm-4 invoice-col">
+                                <b>Xarid #007612</b><br>
+                                <br>
+                                <b>Xarid ID:</b> 4F3S8J<br>
+                                <b>To'lov (Naqd):</b> 8/22/2020<br>
+                                <b>Mijoz:</b> 968-34567
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+
+                        <!-- Table row -->
+                        <div class="row">
+                            <div class="col-xs-12 table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Soni</th>
+                                            <th>Tovar</th>
+                                             <th>Narxi</th>
+                                            <th>Umumiy</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        
+                                                                                <tr>
+                                            <td>2</td>
+                                            <td>Shaytanat (Badiiy adabiyotlar)</td>
+                                            <td><b>UZS </b>12500</td>
+                                            <td><b>UZS </b>25000</td>
+                                        </tr>
+                                                                            </tbody>
+                                </table>
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+
+                        <div class="row">
+                            <!-- accepted payments column -->
+                            <div class="col-md-12">
+                                <p class="lead">Amalga oshirildi 8/22/2020</p>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            
+                                            
+                                            <tr>
+                                                <th>Umumiy:</th>
+                                                <td><b>UZS </b> 50000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                 <p class="lead">Tasdiqlandi</p>
+                                <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>                                          
+                                                <tr>
+                                                    <th>Kassir: <hr></th>
+                                                    <td><b>Ma'sul </b> <hr></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                        </div>
+                        <!-- this row will not appear when printing -->
+                        <div class="row no-print">
+                            <div class="col-xs-12">
+                                <a href="" class="btn btn-default"><i class="fa fa-print"></i> Chop etish</a>
+                                <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Xaridni tasdiqlash</button>
+                                <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download" id="create_pdf" value="Generate PDF"></i> Chop etish PDF</button>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModal3Label">Tahrirlash</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+               <div class="card mb-grid">
+                  <div class="card-header">
+                    <div class="card-header-title">Tahrirlash oynasi</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label class="form-label">Donasi</label>
+                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="Donasi">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Narxi</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder="UZS ">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Sotilish narxi</label>
+                      <input class="form-control input-numeral mb-2" type="text" placeholder="UZS ">
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <p>Ushbu tahrirlash oynasi orqali savatchaga olingan tovarlarni narxlarini va donasini mijoz talabiga (kelishuvga asosan) o'zgartirish mumkin.</p>
+                  </div>
+                </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Yopish</button>
+        <button type="button" class="btn btn-primary">Saqlash</button>
+      </div>
+    </div>
+  </div>
+</div>
+  {% endblock %}

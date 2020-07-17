@@ -1,0 +1,180 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+{% block content %}
+      <!-- adminx-content-aside -->
+      <div class="adminx-content">
+        <!-- <div class="adminx-aside">
+
+        </div> -->
+
+        <div class="adminx-main-content">
+          <div class="container-fluid">
+            <!-- BreadCrumb -->
+            <nav aria-label="breadcrumb" role="navigation">
+              <ol class="breadcrumb adminx-page-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Bosh panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Xodim qo'shish</li>
+              </ol>
+            </nav>
+
+            <div class="pb-3">
+              <h1>Xodim qo'shish</h1>
+            </div>
+        
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="card mb-grid">
+                  <div class="card-header">
+                    <div class="card-header-title">Dasturga kirish</div>
+                  </div>
+                  <div class="card-body">
+                    <form action="">
+                    <div class="form-group">
+                      <label class="form-label">Login</label>
+                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="Masalan: Abdullo2110" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Parol</label>
+                      <input class="form-control mb-2 input-credit-card" type="password" placeholder="Parol " title="Parol lotin harflaridan va raqamlar iborat  bo'lishi shart!" required>
+                    </div>
+
+                    <div class="form-group">
+                      <button type="button" class="btn btn-primary">Saqlash</button>
+                    </div>
+
+                  </div>
+                  <div class="card-footer">
+                    <i data-feather="info"></i> Parol lotin harflaridan va raqamlar iborat  bo'lishi shart!
+                  </div>
+                </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="card mb-grid">
+                  <div class="card-header">
+                    <div class="card-header-title">Shaxsiy ma'lumotlari</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label class="form-label">Ismi</label>
+                      <input class="form-control mb-2 input-credit-card" type="text" placeholder=" ">
+                    </div>
+                      <div class="form-group">
+                      <label class="form-label">Familyasi</label>
+                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Telefon raqami</label>
+                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="+998">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Yashash manzili</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">  Email</label>
+                      <input class="form-control input-numeral mb-2" type="text" placeholder="Email parol esdan chiqqan xolatlar uchun kerak !">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Lavozimi</label>
+                      <select name="select" class="form-control js-choice">
+                        <option value="">Kassir</option>
+                        <option value="">Ombor xodimi</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Qo'shimcha ma'lumot</label>
+                      <input class="form-control input-prefix mb-2" type="text">
+                    </div>
+                  
+                  </div>
+                  <div class="card-footer">
+                    <button type="button" class="btn btn-primary">Saqlash</button>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModal3Label">Tahrirlash</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+               <div class="card mb-grid">
+                  <div class="card-header">
+                    <div class="card-header-title">Tahrirlash oynasi</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label class="form-label">Nomi</label>
+                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="Nomi">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Asosiy katalog</label>
+                      <select name="select" class="form-control js-choice">
+                        <option value="1">Sample value</option>
+                        <option value="2">Sample value 2</option>
+                        <option value="3">Sample value 3</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Qo'shimcha katalog</label>
+                      <select name="select" class="form-control js-choice">
+                        <option value="1">Sample value</option>
+                        <option value="2">Sample value 2</option>
+                        <option value="3">Sample value 3</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Qo'shimcha katalog</label>
+                      <select name="select" class="form-control js-choice">
+                        <option value="1">Sample value</option>
+                        <option value="2">Sample value 2</option>
+                        <option value="3">Sample value 3</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Muallifi</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder=" ">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Nashriyoti</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder=" ">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Kelish narxi</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder="UZS ">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Sotilish narxi</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder="UZS ">
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <p>Ushbu tahrirlash oynasi orqali savatchaga olingan tovarlarni narxlarini va donasini mijoz talabiga (kelishuvga asosan) o'zgartirish mumkin.</p>
+                  </div>
+                </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Yopish</button>
+        <button type="button" class="btn btn-primary">Saqlash</button>
+      </div>
+    </div>
+  </div>
+</div>
+  {% endblock %}

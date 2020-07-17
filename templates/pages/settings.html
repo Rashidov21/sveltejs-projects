@@ -1,0 +1,363 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+{% block content %}
+      <!-- adminx-content-aside -->
+      <div class="adminx-content">
+        <!-- <div class="adminx-aside">
+
+        </div> -->
+
+        <div class="adminx-main-content">
+          <div class="container-fluid">
+            <!-- BreadCrumb -->
+            <nav aria-label="breadcrumb" role="navigation">
+              <ol class="breadcrumb adminx-page-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Bosh panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Sozlamalar</li>
+              </ol>
+            </nav>
+
+            <div class="pb-3">
+              <h1>Sozlamalar</h1>
+            </div>
+        
+              <div class="row">
+            
+                <div class="col-md-12">
+                    <div class="card mb-grid text-center">
+                  <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="card-tab-1" data-toggle="tab" href="#card-tab-content-1" role="tab" aria-controls="card-tab-content-1" aria-selected="true"><img class="pr-2" src="/static/src/feather/book.svg" alt=""> Umumiy</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="card-tab-2" data-toggle="tab" href="#card-tab-content-2" role="tab" aria-controls="card-tab-1" aria-selected="false"><img class="pr-2" src="/static/src/feather/send.svg" alt="">Telegram</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link " id="card-tab-2" data-toggle="tab" href="#card-tab-content-3" role="tab" aria-controls="card-tab-2" aria-selected="false"><img class="pr-2" src="/static/src/feather/truck.svg" alt="">Yetkazib beruvchilar</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link " id="card-tab-2" data-toggle="tab" href="#card-tab-content-4" role="tab" aria-controls="card-tab-2" aria-selected="false"><img class="pr-2" src="/static/src/feather/align-justify.svg" alt="">Katalog</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link " id="card-tab-2" data-toggle="tab" href="#card-tab-content-5" role="tab" aria-controls="card-tab-2" aria-selected="false"><img class="pr-2" src="/static/src/feather/align-left.svg" alt="">Qo'shimcha katalog</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-body">
+                    <div class="tab-content">
+                      <div class="tab-pane fade show active" id="card-tab-content-1" role="tabpanel" aria-labelledby="card-tab-1">
+                              <div class="row">
+                                <div class="col-md-6">
+                                       <div class="card mb-grid">
+                                          <div class="card-header">
+                                            <div class="card-header-title">Profil qoshish</div>
+                                          </div>
+                                          <div class="card-body">
+                                            <form>
+                                              <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-2 col-form-label form-label">Email</label>
+                                                <div class="col-sm-10">
+                                                  <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                                </div>
+                                              </div>
+                                              <div class="form-group row">
+                                                <label for="inputPassword3" class="col-sm-2 col-form-label form-label">Password</label>
+                                                <div class="col-sm-10">
+                                                  <input type="password" class="form-control" id="inputPassword3" placeholder="Parol">
+                                                </div>
+                                              </div>
+                                              <fieldset class="form-group">
+                                                <div class="row">
+                                                  <legend class="col-form-legend col-sm-2 form-label">Lavozimi</legend>
+                                                  <div class="col-sm-10">
+                                                    <div class="form-check">
+                                                      <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                                        (KASSIR), hujjatlarga, barcha kirim chiqimlarga, barcha moliyaviy operatsiyalarga ruxsat etilgan xodim profili.
+                                                      </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                      <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                                        (OMBOR XODIMI) tovarlar nazorati, ombordagi tovarlar soniga, inventarizatsiya , narx belgilashga ruxsat etilgan xodim profili.
+                                                      </label>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </fieldset>
+                                              <div class="form-group row">
+                                                <div class="col-sm-10">
+                                                  <button type="submit" class="btn btn-primary">Saqlash</button>
+                                                </div>
+                                              </div>
+                                            </form>
+                                          </div>
+                                        </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="card mb-grid">
+                                    <div class="card-header">
+                                      <div class="card-header-title">Shaxsiy ma'lumotlari</div>
+                                    </div>
+                                    <div class="card-body">
+                                      <div class="form-group">
+                                        <label class="form-label">Ismi</label>
+                                        <input class="form-control mb-2 input-credit-card" type="text" placeholder=" ">
+                                      </div>
+                                        <div class="form-group">
+                                        <label class="form-label">Familyasi</label>
+                                        <input class="form-control mb-2 input-credit-card" type="text" placeholder="">
+                                      </div>
+                                        <div class="form-group">
+                                        <label class="form-label">Manzili</label>
+                                        <input class="form-control mb-2 input-credit-card" type="text" placeholder="">
+                                      </div>
+                                        <div class="form-group">
+                                        <label class="form-label">Telefoni</label>
+                                        <input class="form-control mb-2 input-credit-card" type="number" placeholder="">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label">Qo'shimcha ma'lumot</label>
+                                        <input class="form-control input-prefix mb-2" type="text">
+                                      </div>
+                                    
+                                    </div>
+                                    <div class="card-footer">
+                                      <button type="button" class="btn btn-primary">Saqlash</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                      <div class="tab-pane fade" id="card-tab-content-2" role="tabpanel" aria-labelledby="card-tab-2">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="card mb-grid">
+                                    <div class="card-header">
+                                      <div class="card-header-title">Telegram sozlamalari</div>
+                                    </div>
+                                    <div class="card-body">
+                                      <div class="form-group">
+                                        <label class="form-label">ID ni kiriting.</label>
+                                        <input class="form-control mb-2 input-credit-card" type="text" placeholder="Telegram ID ">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="form-label">Botga jo'natilishi kerak </label>
+                                        <fieldset class="form-group">
+                                                <div class="row">                                             
+                                                  <div class="col-sm-10">
+                                                    <legend class="col-form-legend col-sm-2 form-label">Kunlik</legend>
+                                                    <div class="form-check">
+                                                      <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                                        (Hisobot), Har kunlik kirim chiqim hisoboti ko'rsatilgan telegram foydalanuvchiga yuboriladi.
+                                                      </label>
+                                                    </div>
+                                                     <legend class="col-form-legend col-sm-2 form-label">Oylik</legend>
+                                                    <div class="form-check">
+                                                      <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                                                        (Hisobot), Har oylik kirim chiqim hisoboti ko'rsatilgan telegram foydalanuvchiga yuboriladi.
+                                                      </label>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </fieldset>
+                                      </div>
+                                    
+                                    </div>
+                                    <div class="card-footer">
+                                      <button type="button" class="btn btn-primary">Saqlash</button>
+                                    </div>
+                                  </div>
+                          </div>
+                        </div>
+                          
+                      </div>
+                      <div class="tab-pane fade" id="card-tab-content-3" role="tabpanel" aria-labelledby="card-tab-3">
+                        <div class="row">
+                          <div class="col-md-6">
+                                <div class="card mb-grid">
+                                  <div class="card-header">
+                                    <div class="card-header-title">Yetkazib beruvchini kiriting</div>
+                                  </div>
+                                  <div class="card-body">
+                                    <div class="form-group">
+                                      <label class="form-label">Ismi, Tashkilot nomi </label>
+                                      <input class="form-control mb-2 input-credit-card" type="text" placeholder=" ">
+                                    </div>
+                                      <div class="form-group">
+                                      <label class="form-label">Manzili</label>
+                                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label">Tovar turi</label>
+                                      <select name="select" class="form-control js-choice">
+                                        <option value="">Kitob</option>
+                                        <option value="">Boshqa</option>
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label">Qo'shimcha ma'lumot</label>
+                                      <input class="form-control input-prefix mb-2" type="text">
+                                    </div>
+                                  
+                                  </div>
+                                  <div class="card-footer">
+                                    <button type="button" class="btn btn-primary">Saqlash</button>
+                                  </div>
+                                </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="card-tab-content-4" role="tabpanel" aria-labelledby="card-tab-3">
+                        <div class="row">
+                          <div class="col-md-6">
+                                <div class="card mb-grid">
+                                  <div class="card-header">
+                                    <div class="card-header-title">Katalog qo'shish</div>
+                                  </div>
+                                  <div class="card-body">
+                                    <div class="form-group">
+                                      <label class="form-label">Katalog nomi </label>
+                                      <input class="form-control mb-2 input-credit-card" type="text" placeholder=" ">
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label">Tovar turi</label>
+                                      <select name="select" class="form-control js-choice">
+                                        <option value="">Kitob</option>
+                                        <option value="">Boshqa</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="card-footer">
+                                    <button type="button" class="btn btn-primary">Saqlash</button>
+                                  </div>
+                                </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="card-tab-content-5" role="tabpanel" aria-labelledby="card-tab-3">
+                        <div class="row">
+                          <div class="col-md-6">
+                                <div class="card mb-grid">
+                                  <div class="card-header">
+                                    <div class="card-header-title">Qo'shimcha katalog qo'shish</div>
+                                  </div>
+                                  <div class="card-body">
+                                    <div class="form-group">
+                                      <label class="form-label">Katalogni tanlang</label>
+                                      <select name="select" class="form-control js-choice">
+                                        <option value="">Adabiyot</option>
+                                        <option value="">Ona tili</option>
+                                        <option value="">Til</option>
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label">Qo'shimcha katalog nomi </label>
+                                      <input class="form-control mb-2 input-credit-card" type="text" placeholder=" ">
+                                    </div>                                    
+                                    <div class="form-group">
+                                      <label class="form-label">Qo'shimcha ma'lumot</label>
+                                      <input class="form-control input-prefix mb-2" type="text">
+                                    </div>
+                                  
+                                  </div>
+                                  <div class="card-footer">
+                                    <button type="button" class="btn btn-primary">Saqlash</button>
+                                  </div>
+                                </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+             </div>
+                  
+
+               
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModal3Label">Tahrirlash</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+               <div class="card mb-grid">
+                  <div class="card-header">
+                    <div class="card-header-title">Tahrirlash oynasi</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label class="form-label">Nomi</label>
+                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="Nomi">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Asosiy katalog</label>
+                      <select name="select" class="form-control js-choice">
+                        <option value="1">Sample value</option>
+                        <option value="2">Sample value 2</option>
+                        <option value="3">Sample value 3</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Qo'shimcha katalog</label>
+                      <select name="select" class="form-control js-choice">
+                        <option value="1">Sample value</option>
+                        <option value="2">Sample value 2</option>
+                        <option value="3">Sample value 3</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Qo'shimcha katalog</label>
+                      <select name="select" class="form-control js-choice">
+                        <option value="1">Sample value</option>
+                        <option value="2">Sample value 2</option>
+                        <option value="3">Sample value 3</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Muallifi</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder=" ">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Nashriyoti</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder=" ">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Kelish narxi</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder="UZS ">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">Sotilish narxi</label>
+                      <input class="form-control input-date mb-2" type="text" placeholder="UZS ">
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <p>Ushbu tahrirlash oynasi orqali savatchaga olingan tovarlarni narxlarini va donasini mijoz talabiga (kelishuvga asosan) o'zgartirish mumkin.</p>
+                  </div>
+                </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Yopish</button>
+        <button type="button" class="btn btn-primary">Saqlash</button>
+      </div>
+    </div>
+  </div>
+</div>
+  {% endblock %}

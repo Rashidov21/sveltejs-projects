@@ -1,0 +1,310 @@
+{% extends 'wrapper.html' %}
+{% load static %}
+{% block title %}
+    <title>Savatcha</title>
+  {% endblock %}
+{% block content %}
+      <!-- adminx-content-aside -->
+      <div class="adminx-content">
+        <!-- <div class="adminx-aside">
+
+        </div> -->
+
+        <div class="adminx-main-content">
+          <div class="container-fluid">
+            <!-- BreadCrumb -->
+            <nav aria-label="breadcrumb" role="navigation">
+              <ol class="breadcrumb adminx-page-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Bosh panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Savatcha</li>
+              </ol>
+            </nav>
+
+            <div class="pb-3">
+              <h1>Savatcha</h1>
+            </div>
+<!-- ak -->
+<style>
+  .price_input{
+    max-width: 55px;
+  }
+</style>
+           <div class="row">
+              <div class="col">
+             
+                <div class="card mb-grid">
+                  <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header-title">Tanlangan Tovarlar</div>
+                    <div class="card-header-title" style="font-size:21px;"><b class="text-info">Jami tovarlar soni:</b><i id="all_count_cart_html"> {{ cart.all_qty }} </i> ta</div>
+                    <div class="card-header-title" style="font-size:21px;"><b class="text-primary">Jami summa:</b> <b id="itogo">{{ cart.cart_total }} </b> <sup><i>uzs</i></sup>
+                    </div>
+                  </div>
+                  <div class="table-responsive-sm" id="my_cart_table">
+                    {% if cart.items.count > 0 %}
+                    <table class="table table-actions table-striped table-hover mb-0">
+                      <thead>
+                        <tr class="text-center">
+                          <th scope="col">
+                            <label class="custom-control custom-checkbox m-0 p-0">
+                              <input type="checkbox" class="custom-control-input table-select-all">
+                              <span class="custom-control-indicator"></span>
+                            </label>
+                          </th>
+                          <th scope="col">Nomi</th>
+                          <th scope="col">Kategoriyasi</th>
+                          <th scope="col">Narxi</th>
+                          <th scope="col">Donasi</th>
+                          <th scope="col">Umumiy summa(tovar uchun)</th>
+                          <th scope="col">O'chirish</th>
+                        </tr>
+                      </thead>
+                      <tbody style="color:black;font-weight:700;">
+                           
+                        {% for item in cart.items.all %}
+
+                        <tr class="text-center" id="item-tr-{{ item.id }}">
+                          <th scope="row">
+                            <label class="custom-control custom-checkbox m-0 p-0">
+                              <input type="checkbox" class="custom-control-input table-select-row">
+                              <span class="custom-control-indicator"></span>
+                            </label>
+                          </th>
+                          <td>{{ item.product.title }}</td>
+                          <td>{{ item.product.category  }}</td>
+                          <td><input type="number" onchange="ControlPrice({{item.id}},this.value)" id="product" style="width:30%;" class="form-group " value="{{ item.price }}"><i>uzs</i></td>
+                          <td style="color:blue;">
+                            <input type="number" onchange="ChangeQtyCartHtml({{ item.id }},this.value)" style="width:30%; padding:2px;" class="form-group" value="{{ item.qty }}">
+                          </td>
+                          <td style="color:green;" id="product_total_summa_{{ item.id }}">
+                           {{ item.item_total }} <sup>uzs</sup>
+                          </td>
+                          <td>
+                         <input type="hidden" id="input_product_id_{{ item.id }}" value="{{ item.product.id }}">
+                            <button class="btn btn-sm btn-danger" onclick="DelProductCartHtml({{ item.id }},'open')" title="Tovarni savatchadan o'chirish"><i data-feather="trash"></i></button><br>
+                            <div id="del_product_query_{{ item.id }}" style="display:none;">
+                              
+                            <b>Tovar savatchadan o'chirilsinmi?</b><br>
+                            <a href="#" class="btn btn-success" onclick="DelProductCartHtml({{ item.id }},'close')">Yo`q</a>
+                            <a href="#" class="btn btn-danger" onclick="DelProductCartHtml({{ item.id }},'remove')">Xa</a>
+                            </div>
+                            <div id="sound"></div>
+                          </td>
+                        </tr>
+                  {% endfor %}
+                        <tr class="text-center mt-5 mb-5" style="margin-top:20px;">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="text"><strong><a style="margin-top:20px;" type="button" class="btn btn-sm btn-success" href="{% url 'product:invoice' %}"  title="Buyurtmani qabul qilish saxifasiga o'tish"><h6><i data-feather="check"></i>Buyurtmani tasdiqlash</h6></a>
+            </strong></td>
+            <td class="text-center" id="total_price"><button style="margin-top:20px;" type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal3" title="Savatchadagi barcha tovarlarni o'chirib tashlash"><h6><i data-feather="refresh-ccw"></i> Savatchani tozalash</h6></button></td>
+
+            <td></td>
+          </tr>
+
+                      </tbody>
+
+                    </table>
+        
+                    {% else %}
+                    <div class="text-center mt-5 mb-5">
+                      <h3>Savatcha bo'sh</h3>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+      
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+<script>
+    function ChangeQtyCartHtml(item_id,qty){
+
+    // console.log(qty);
+    // var item_id = document.getElementById('item_id').value;
+    // var qty = document.getElementById('cart_product_item').value;
+    console.log(item_id);
+    var valu = {'item_id':item_id,'qty':qty};
+    var value = JSON.stringify(valu);
+      if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    var data = JSON.parse(this.responseText);
+  console.log(data);
+
+document.getElementById('itogo').innerHTML=data.cart_total_price;
+document.getElementById('all_count_cart_html').innerHTML= data.all_product_count;
+document.getElementById('product_total_summa_'+item_id).innerHTML= ""+data.item_total+"<sup>uzs</sup>";
+
+
+
+    }
+  }
+  var url = "{% url 'product:change_item_qty' %}"
+  var url = url+"?value="+value;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.send();
+  }
+
+function DelProductCartHtml(item_id,close){
+var del_product_query = document.getElementById('del_product_query_'+item_id);
+var item_tr = document.getElementById('item-tr-'+item_id);
+if(close=='close'){
+  del_product_query.style="display:none;"
+  item_tr.style="background:#fff; transition:2s;"
+  
+
+}else if(close=='open'){
+
+  del_product_query.style="display:block; transition:1s;opacity:1;"
+  item_tr.style="background:#f8ad9d; transition:2s; opacity:1;"
+}else if(close=='remove'){
+  var product_id = document.getElementById('input_product_id_'+item_id).value;
+ var valu = {'item_id':item_id,'product_id':product_id};
+    var value = JSON.stringify(valu);
+    if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    var data = JSON.parse(this.responseText);
+  console.log(data);
+if(data.status == 'ok'){
+document.getElementById('itogo').innerHTML=data.cart_total_price;
+document.getElementById('all_count_cart_html').innerHTML=data.all_product_count;
+
+document.getElementById('item-tr-'+item_id).style="transition:1s; display:none;";
+// document.getElementById('cart_items_total').innerHTML=data.cart_total;
+}
+
+    }
+  }
+  var url = "{% url 'product:remove_from_cart_view' %}"
+  var url = url+"?value="+value;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.send();
+
+}
+}
+
+
+
+
+
+
+
+
+
+function ControlPrice(item_id,price){
+  var valu = {'item_id':item_id,'price':price};
+    var value = JSON.stringify(valu);
+    if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    var data = JSON.parse(this.responseText);
+  console.log(data);
+if(data.status == 'ok'){
+console.log('Success');
+document.getElementById('itogo').innerHTML=data.cart_total_price;
+document.getElementById('product_total_summa_'+item_id).innerHTML= ""+data.item_total+"<sup>uzs</sup>";
+}
+
+    }
+  }
+  var url = "{% url 'product:control_price' %}"
+  var url = url+"?value="+value;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.send();
+}
+
+
+
+
+
+
+
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal3"  tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
+  <div class="modal-dialog"  role="document">
+    <div class="modal-content" style="background:#f08080;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModal3Label">Savatchani tozalash</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row" >
+               <div class="card mb-grid" style="width:100%;">
+                  <div class="card-header">
+                    <div class="card-header-title"></div>
+                  </div>
+               
+                  <div class="card-footer" >
+                    <p><h5>Savatchani tozalashni xoxlaysizmi ?</h5>
+                    Tovarlar faqat savatchadan o'chiriladi bazada saqlab qolinadi!</p>
+                  </div>
+                </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="close_modal" data-dismiss="modal">Ortga</button>
+        <button type="button" onclick="ResetCart()" class="btn btn-warning">Tozalash</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function ResetCart(){
+
+   if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    var data = JSON.parse(this.responseText);
+  console.log(data);
+if(data.status == 'ok'){
+console.log('Success');
+document.getElementById('close_modal').click();
+document.getElementById('my_cart_table').innerHTML='<div class="text-center mt-5 mb-5"><h3>Savatcha bo`sh</h3></div>';
+document.getElementById('itogo').innerHTML=data.cart_total_price;
+document.getElementById('all_count_cart_html').innerHTML= data.all_product_count;
+}
+
+    }
+  }
+  var url = "{% url 'product:reset_cart' %}"
+
+  xmlhttp.open("GET",url,true);
+  xmlhttp.send();
+
+}
+</script>
+  {% endblock %}
