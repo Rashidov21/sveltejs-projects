@@ -18,7 +18,7 @@
             </nav>
 
             <div class="pb-3">
-              <h1>Statistika</h1>
+              <h1>Hisobot</h1>
             </div>
 <!-- ak -->
 <style>
@@ -54,6 +54,11 @@
               </h3>
               <div class="card-title-sub">
                 <ul class="list-unstyled">
+                  <li class="d-inline-block">
+                      <a href="#exampleModal5" class="btn btn-info btn-md" data-toggle="modal" data-target="#exampleModal5" title="Yillik, oylik hisobotlar">
+                        Boshqa oylar hisoboti <i data-feather="search"></i>
+                      </a>
+                    </li>
                     <li class="d-inline-block">
                       <a href="#" class="btn btn-info btn-md" title="PDF ko'rinishida saqlash">
                         <i data-feather="save"></i>
@@ -308,6 +313,60 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModal5Label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModal5Label">Saralash</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+               <div class="card mb-grid" style="width:100%; margin-right:10px; margin-left:10px;">
+                  <div class="card-header">
+                    <div class="card-header-title">Saralash oynasi</div>
+                  </div>
+                  <div class="card-body" >
+                    <div class="form-group">
+                      <label class="form-label">Yil</label>
+                       <select name="select" class="form-control js-choice">
+                        <option value="1">2020</option>
+                        <option value="2">2021</option>
+                        <option value="3">2022</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Oylar</label>
+                       <select name="select" class="form-control js-choice">
+                        <option value="01">Yanvar</option>
+                        <option value="02">Fevral</option>
+                        <option value="03">Mart</option>
+                        <option value="04">Aprel</option>
+                        <option value="05">May</option>
+                        <option value="06">Iyun</option>
+                        <option value="07">Iyul</option>
+                        <option value="08">Avgust</option>
+                        <option value="09">Sentabr</option>
+                        <option value="10">Oktyabr</option>
+                        <option value="11">Noyabr</option>
+                        <option value="12">Dekabr</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Yopish</button>
+        <button type="button" class="btn btn-primary">Saqlash</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
   {% endblock %}
