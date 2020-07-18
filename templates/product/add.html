@@ -93,10 +93,46 @@
                       <input class="form-control input-prefix mb-2" placeholder="Sotiladigan narxi" required type="text" name="cur_price">
                     </div>
                     {% csrf_token %}
+                 
                     <div class="form-group">
+                      <label class="form-label">Qo'shimcha ma'lumot</label>
+                      <input class="form-control input-prefix mb-2" name="info" type="text">
+                    </div>
+                  
+                  </div>
+                  <div class="card-footer">
+                 
+                     <input type="submit" class="btn btn-primary" value="Qoshish">
+                  </div>
+                  </form>
+                </div>
+                </div>
+              </div>
+
+              {% if page_object %}
+              <div class="pb-1">
+              <h3>Tekshirilmagan tovarlar</h3>
+              <div class="row">
+                <div class="col-md-9">
+                  <ul class="list-unstyled">
+                <li class="d-inline-block">
+                  <a href="#" class="btn btn-light btn-md" title="Ro'yhatga olish ID raqami">
+                    Tovarlar soni:{{ product_count }}
+                  </a>
+                </li>
+                <li class="d-inline-block">
+                   <a href="#" class="btn btn-light btn-md" title="Tovarlar ro'yhatga olingan sana">
+                    Sana: 21/08/2020
+                  </a>
+                </li>
+               <form action="{% url 'product:check_products' %}" method="post">
+                    <li class="d-inline-block">
+                   <!-- <a href="#" class="badge" title="Tasdiqlash"> -->
+                       <div class="form-group">
                       <label class="form-label" id="providers_info">Yetkazib beruvchi (baza)</label>
                       <label class="form-label" id="providers_info_twoo"></label>
-                      <select name="provider" id="providers" class="form-control js-choice">
+                      {% csrf_token %}
+                      <select name="provider" required id="providers" class="form-control js-choice">
                         <option value="">--- -- ---</option>
                     
                       </select>
@@ -140,112 +176,19 @@
   </div>
 </div>
 
-<script>
-  function AddProvider(){
-   
-  
-var add_provider_name_info = document.getElementById('add_provider_name_info');
-var add_provider_adress_info = document.getElementById('add_provider_adress_info');
-var add_provider_phone_info = document.getElementById('add_provider_phone_info');
-  
-
-var add_provider_field_name = document.getElementById('add_provider_field_name').value;
-var add_provider_field_phone = document.getElementById('add_provider_field_phone').value;
-var add_provider_field_adress = document.getElementById('add_provider_field_adress').value;
-
-
-
-if(add_provider_field_name.length == 0 ){
-  add_provider_info.innerHTML = "<font color='red'>Kerakli ma'lumot kiritilmadi!</font>";
-
-
-}else if(add_provider_field_phone.length == 0 ){
-  add_provider_phone_info.innerHTML = "<font color='red'>Kerakli ma'lumot kiritilmadi!</font>";
-  
-}
-else if(add_provider_field_adress.length == 0 ){
-  add_provider_adress_info.innerHTML = "<font color='red'>Kerakli ma'lumot kiritilmadi!</font>";
-  
-}else{
-
-  add_provider_name_info.innerHTML = "Yetqazib beruvchi nomi";
-  add_provider_phone_info.innerHTML = "Yetqazib beruvchi telefoni";
-  add_provider_adress_info.innerHTML = "Yetqazib beruvchi manzili";
-
-  var valu = {name:add_provider_field_name,adress:add_provider_field_adress,phone:add_provider_field_phone}
-      var value = JSON.stringify(valu);
-    if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-  } else {  // code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.onreadystatechange=function() {
-    if (this.readyState==4 && this.status==200) {
-    var data = JSON.parse(this.responseText);
-    console.log(data);
-    if(data.status == 'ok'){
-      document.getElementById('providers_info_twoo').innerHTML="<font color='green'>Yangi ma'lumot qo'shildi</font>";
-      document.getElementById('accardion_btn').click();
-      DownloadProviders();
-
-    }else{
-      document.getElementById('providers_info').innerHTML="<font color='red'>Yetkazib beruvchi (Ma'lumot qo'shishda xatolik yuz berdi)</font>";
-      document.getElementById('accardion_btn').click();
-    }
-    
-    }
-  }
-  var url = "{% url 'books:add_provider' %}"
-  var url = url+"?q="+value;
-  xmlhttp.open("GET",url,true);
-  xmlhttp.send();
-} 
-}
-
-</script>
 
 
 
 
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label class="form-label">Qo'shimcha ma'lumot</label>
-                      <input class="form-control input-prefix mb-2" name="info" type="text">
-                    </div>
-                  
-                  </div>
-                  <div class="card-footer">
-                 
-                     <input type="submit" class="btn btn-primary" value="Qoshish">
-                  </div>
-                  </form>
-                </div>
-                </div>
-              </div>
-
-              {% if page_object %}
-              <div class="pb-1">
-              <h3>Tekshirilmagan tovarlar</h3>
-              <div class="row">
-                <div class="col-md-9">
-                  <ul class="list-unstyled">
-                <li class="d-inline-block">
-                  <a href="#" class="btn btn-light btn-md" title="Ro'yhatga olish ID raqami">
-                    Tovar kirim ID: 456
-                  </a>
+                  <!--</a>-->
                 </li>
-                <li class="d-inline-block">
-                   <a href="#" class="btn btn-light btn-md" title="Tovarlar ro'yhatga olingan sana">
-                    Sana: 21/08/2020
-                  </a>
-                </li>
-                <li class="d-inline-block">
+                 <li class="d-inline-block ml-2">
                    <!-- <a href="#" class="badge" title="Tasdiqlash"> -->
                     <div class="form-group">
-                      <label class="form-label">Tekshirildi </label>
-                      <input type="checkbox" name="check">
+                      <label class="form-label"><h5>Tekshirildi</h5> </label>
+                      <input type="checkbox" required name="check">
                     </div> 
                   <!--</a>-->
                 </li>
@@ -257,6 +200,7 @@ else if(add_provider_field_adress.length == 0 ){
                     </div> 
                   <!--</a>-->
                 </li>
+               </form>
 
               </ul>
                 </div>
@@ -298,6 +242,7 @@ else if(add_provider_field_adress.length == 0 ){
                               <span class="custom-control-indicator"></span>
                             </label>
                           </th>
+                          <th scope="col">№</th>
                           <th scope="col">Nomi</th>
                           <th scope="col">Kategoriyasi</th>
                           <th scope="col">Muallifi</th>
@@ -305,6 +250,7 @@ else if(add_provider_field_adress.length == 0 ){
                           <th scope="col">Omborda</th>
                           <th scope="col">Narxi(K)</th>
                           <th scope="col">Narxi(S)</th>
+                          <th scope="col">Sana</th>
                           <th scope="col">Tahrirlash</th>
                         </tr>
                       </thead>
@@ -318,8 +264,10 @@ else if(add_provider_field_adress.length == 0 ){
                             </label>
                           </th>
                       
+                          <td>{{ forloop.counter}}</td>
                           <td>{{ product.title }}</td>
                           <td>{{ product.category }}</td>
+                          <td>{{ product.author }}</td>
                           <td>{{ product.edition }}</td>
                           <td>{{ product.quantity }}</td>
                           <td>{{ product.pur_price }}</td>
@@ -327,8 +275,8 @@ else if(add_provider_field_adress.length == 0 ){
                           <td>{{ product.add_date|date:"Y-m-d" }}</td>
 
                             <td>
-                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal3" title="Tanlangan tovarni tahrirlash"><i data-feather="edit"></i></button>
-                            <button class="btn btn-sm btn-danger" onclick="playSound('bing');" title="Tozarni savatchadan o'chirish"><i data-feather="trash"></i></button>
+    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" onclick="EditProduct({{ product.id }})" data-target="#exampleModal3" title="Tanlangan tovarni tahrirlash"><i data-feather="edit"></i></button>
+                            <button class="btn btn-sm btn-danger" onclick="playSound('bing');" title="Tovarni  o'chirish"><i data-feather="trash"></i></button>
                             <div id="sound"></div>
                           </td>
                         </tr>
@@ -420,49 +368,56 @@ else if(add_provider_field_adress.length == 0 ){
                   </div>
                   <div class="card-body">
                     <div class="form-group">
-                      <label class="form-label">Nomi</label>
-                      <input class="form-control mb-2 input-credit-card" type="text" placeholder="Nomi">
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label">Asosiy katalog</label>
-                      <select name="select" class="form-control js-choice">
-                        <option value="1">Sample value</option>
-                        <option value="2">Sample value 2</option>
-                        <option value="3">Sample value 3</option>
+                        <label class="form-label"><b>Asosiy katalog</b></label>
+                      <select name="category" required onclick="SearchSubCategory(this.value)" id="categories" class="form-control js-choice">
+                        <option  selected disabled>--- -- ---</option>
+                        
+                        {% for c in categories %}
+                   
+                     
+                   
+                        <option value="{{ c.id }}">{{ c }}</option>
+               
+                        {% endfor %}
                       </select>
                     </div>
-                    <div class="form-group">
-                      <label class="form-label">Qo'shimcha katalog</label>
-                      <select name="select" class="form-control js-choice">
-                        <option value="1">Sample value</option>
-                        <option value="2">Sample value 2</option>
-                        <option value="3">Sample value 3</option>
+               
+                     <div class="form-group">
+                      <label class="form-label" id="subcategory_info_2">Qo'shimcha katalog</label>
+                      <select name="subcategory" id="subcategories_2" class="form-control js-choice">
+                        <option value="">Avval asosiy katologni tanlang</option>
+                      
                       </select>
                     </div>
-                    <div class="form-group">
-                      <label class="form-label">Qo'shimcha katalog</label>
-                      <select name="select" class="form-control js-choice">
-                        <option value="1">Sample value</option>
-                        <option value="2">Sample value 2</option>
-                        <option value="3">Sample value 3</option>
-                      </select>
+                   
+                  <div class="form-group">
+                      <label class="form-label"><b>Nomi</b></label>
+                      <input class="form-control mb-2 input-credit-card" type="text" id="name" placeholder="Nomi">
                     </div>
-
                     <div class="form-group">
                       <label class="form-label">Muallifi</label>
-                      <input class="form-control input-date mb-2" type="text" placeholder=" ">
+                      <input id="author" class="form-control input-date mb-2" type="text" placeholder=" ">
                     </div>
                     <div class="form-group">
                       <label class="form-label">Nashriyoti</label>
-                      <input class="form-control input-date mb-2" type="text" placeholder=" ">
+                      <input id="edition" class="form-control input-date mb-2" type="text" placeholder=" ">
                     </div>
                     <div class="form-group">
-                      <label class="form-label">Kelish narxi</label>
-                      <input class="form-control input-date mb-2" type="text" placeholder="UZS ">
+                      <label class="form-label"><b>Kelish narxi</b></label>
+                      <input id="pur_price" class="form-control input-date mb-2" type="number" placeholder="UZS ">
                     </div>
                     <div class="form-group">
-                      <label class="form-label">Sotilish narxi</label>
-                      <input class="form-control input-date mb-2" type="text" placeholder="UZS ">
+                      <label class="form-label"><b>Sotilish narxi</b></label>
+                      <input id="cur_price" class="form-control input-date mb-2" type="number" placeholder="UZS ">
+                    </div>
+                     <div class="form-group">
+                      <label class="form-label"><b>Soni</b></label>
+                      <input id="qty" class="form-control input-date mb-2" type="number" placeholder="Soni">
+                    </div>
+                      <div class="form-group">
+                      <label class="form-label">Qoshimcha ma'lumot</label>
+                      <input id="info" class="form-control mb-2 input-credit-card" type="text" placeholder="Qisqa ma'lumot">
+                      <input type="hidden" name="product_id" id="product_id">
                     </div>
                   </div>
                   <div class="card-footer">
@@ -481,7 +436,47 @@ else if(add_provider_field_adress.length == 0 ){
 
 
                   
-          <script>
+<script>
+function EditProduct(product_id){
+  var value = product_id;
+  var name = document.getElementById('name');
+  var edition = document.getElementById('edition');
+  var author = document.getElementById('author');
+  var pur_price = document.getElementById('pur_price');
+  var cur_price = document.getElementById('cur_price');
+  var qty = document.getElementById('qty');
+  var info = document.getElementById('info');
+  var product_id = document.getElementById('product_id');
+   
+   if (window.XMLHttpRequest) {
+        var xhttp=new XMLHttpRequest();
+        } else {  // code for IE6, IE5
+        var xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xhttp.onreadystatechange = function() {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+              var data = JSON.parse(this.responseText);
+        console.log(data);
+        if(data.status == 'ok'){
+          name.value = data.title;
+          edition.value = data.edition;
+          author.value = data.author;
+          pur_price.value = data.pur_price;
+          cur_price.value = data.cur_price;
+          qty.value = data.qty;
+          info.value = data.info;
+          product_id.value = data.product_id;
+        }
+
+        }
+        };
+         var url = "{% url 'books:edit_product' %}"
+        xhttp.open("GET", url+"?value="+value, true);
+        xhttp.send();
+        }
+
+
+
 function SearchSubCategory(value){
 
   if (window.XMLHttpRequest) {
@@ -496,13 +491,17 @@ function SearchSubCategory(value){
     console.log(data);
     if(data.subcategories.length == 0 ){ 
     
+      document.getElementById("subcategory_info_2").innerHTML = "<font color='red'>Qo'shimcha kataloglar topilmadi</font>"; 
+      
       document.getElementById("subcategory_info").innerHTML = "<font color='red'>Qo'shimcha kataloglar topilmadi</font>"; 
    
   var option="<option value=''>------------</option>";
   document.getElementById("subcategories").innerHTML = option;
+  document.getElementById("subcategories_2").innerHTML = option;
     }
     else {
       document.getElementById("subcategory_info").innerHTML = "<font color=''>Qo'shimcha katalog</font>"; 
+      document.getElementById("subcategory_info_2").innerHTML = "<font color=''>Qo'shimcha katalog</font>"; 
   var option="<option selected disabled>"+data.subcategories.length+"-katolog topildi</option>";
   
       
@@ -510,6 +509,7 @@ function SearchSubCategory(value){
       option += "<option  id='id_student' value="+data.subcategories[x][0]+">"+data.subcategories[x][1]+"</option>";
     }
   document.getElementById("subcategories").innerHTML = option;
+  document.getElementById("subcategories_2").innerHTML = option;
    
     }
     }
@@ -560,26 +560,68 @@ function DownloadProviders(){
 }
 
 
+  function AddProvider(){
+   
+  
+var add_provider_name_info = document.getElementById('add_provider_name_info');
+var add_provider_adress_info = document.getElementById('add_provider_adress_info');
+var add_provider_phone_info = document.getElementById('add_provider_phone_info');
+  
+
+var add_provider_field_name = document.getElementById('add_provider_field_name').value;
+var add_provider_field_phone = document.getElementById('add_provider_field_phone').value;
+var add_provider_field_adress = document.getElementById('add_provider_field_adress').value;
 
 
-// function CallAjax(value,url){
-//    if (window.XMLHttpRequest) {
-//     // code for IE7+, Firefox, Chrome, Opera, Safari
-//     xmlhttp=new XMLHttpRequest();
-//   } else {  // code for IE6, IE5
-//     xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-//   }
-//   xmlhttp.onreadystatechange=function() {
-//     if (this.readyState==4 && this.status==200) {
-//     var data = JSON.parse(this.responseText);
-//     console.log(data);
-//     }
-//     return this.responseText;
-//   }
-//     var url = url+"?q="+value;
-//   xmlhttp.open("GET",url,true);
-//   xmlhttp.send();
-//     return xmlhttp.responseText;
-// }
+
+if(add_provider_field_name.length == 0 ){
+  add_provider_info.innerHTML = "<font color='red'>Kerakli ma'lumot kiritilmadi!</font>";
+
+
+}else if(add_provider_field_phone.length == 0 ){
+  add_provider_phone_info.innerHTML = "<font color='red'>Kerakli ma'lumot kiritilmadi!</font>";
+  
+}
+else if(add_provider_field_adress.length == 0 ){
+  add_provider_adress_info.innerHTML = "<font color='red'>Kerakli ma'lumot kiritilmadi!</font>";
+  
+}else{
+
+  add_provider_name_info.innerHTML = "Yetqazib beruvchi nomi";
+  add_provider_phone_info.innerHTML = "Yetqazib beruvchi telefoni";
+  add_provider_adress_info.innerHTML = "Yetqazib beruvchi manzili";
+
+  var valu = {name:add_provider_field_name,adress:add_provider_field_adress,phone:add_provider_field_phone}
+      var value = JSON.stringify(valu);
+    if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    var data = JSON.parse(this.responseText);
+    console.log(data);
+    if(data.status == 'ok'){
+      document.getElementById('providers_info_twoo').innerHTML="<font color='green'>Yangi ma'lumot qo'shildi</font>";
+      document.getElementById('accardion_btn').click();
+      DownloadProviders();
+
+    }else{
+      document.getElementById('providers_info').innerHTML="<font color='red'>Yetkazib beruvchi (Ma'lumot qo'shishda xatolik yuz berdi)</font>";
+      document.getElementById('accardion_btn').click();
+    }
+    
+    }
+  }
+  var url = "{% url 'books:add_provider' %}"
+  var url = url+"?q="+value;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.send();
+} 
+}
+
+</script>
 </script>
   {% endblock %}

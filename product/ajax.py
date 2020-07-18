@@ -273,6 +273,7 @@ def add_client(request):
 
 
 
+
 def search_product(request):
 	query_string = ''
 	found_entries = None
@@ -286,12 +287,10 @@ def search_product(request):
 		for f in found_entries:
 			data['list'].append({'title':f.title,'category':f.category.title,
 				'category_id':f.category.id,'price':f.cur_price,
-				'quantity':f.quantity,'product_id':f.id})
+				'quantity':f.quantity,'product_id':f.id,'author':f.author})
 	else:
 		data['status'] = 'error'				
 	return JsonResponse(data)
-			
-	return JsonResponse(data)	
 			
 
 

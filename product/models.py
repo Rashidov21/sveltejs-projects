@@ -8,6 +8,9 @@ class Settings(models.Model):
 	system_sound = models.BooleanField("Sound",default=True)
 	add_cart_product_count_0 = models.BooleanField("Savatchaga qo'shish (Product 0 dona)",default=False)
 	color_product_limit = models.BooleanField("Oz qolgan tovarlar rang bilan ajratilsin",default=True)
+	view_products_count_no = models.BooleanField("Omborda tugagan tovarlar ko'rsatilsin",default=True)
+	view_products_check_no = models.BooleanField("Tekshirilmagan tovarlar ko'rsatilsin",default=True)
+	add_products_for_one_provider_at_one_day_with_one_list = models.BooleanField("1kun ich. 1ta provider",default=True)
 
 
 class Client(models.Model):

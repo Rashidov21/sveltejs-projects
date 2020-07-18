@@ -8,11 +8,14 @@ def image_folder(instance, filename):
 	filename = instance.title +'.'+filename.split('.')[1]
 	return"{0}/{1}".format(instance.title, filename)
 
-
+class Position(models.Model):
+	name = models.CharField("Lavozim", max_length=50)
+	def __str__(self):
+		return self.name
 
 class UserAccount(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,null=True)
-	position = models.CharField("Lavozim",max_length=25, blank=True)
+	position = models.ForeignKey(Position,on_delete=models.PROTECT,null=True, blank=True)
 	name = models.CharField('Ismi',max_length=25)
 	last_name = models.CharField('Familyasi',max_length=25)
 	adres = models.CharField(max_length=355,blank=True)
@@ -72,6 +75,17 @@ class Provider(models.Model):
 	def __str__(self):
 		return "{}".format(self.name)
 
+class KeyWord(models.Model):
+	key = models.CharField("Kalit so'z", max_length=350)
+	date = models.CharField("Sana", max_length=50)
+	qty = models.PositiveIntegerField('Soni',default=0,blank=True)
+	user =  models.ForeignKey(UserAccount, on_delete = models.CASCADE,blank=True,null=True, verbose_name="Mas'ul")	
+	summa = models.PositiveIntegerField('Summa',default=0,blank=True)
+	status = models.BooleanField(default=True)
+
+	def __str__(self):
+		return self.key
+
 
 
 class Product(models.Model):
@@ -79,12 +93,13 @@ class Product(models.Model):
 	subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT, verbose_name="SubKategoriya ",blank=True, null=True)		
 	added_by = models.ForeignKey(UserAccount,related_name = 'added_by', on_delete=models.PROTECT, verbose_name="Qo'shdi",blank=True, null=True)		
 	check_by = models.ForeignKey(UserAccount,related_name = 'check_by', on_delete=models.PROTECT, verbose_name="Tekshirdi",blank=True, null=True)		
+	key = models.ForeignKey(KeyWord,related_name = 'keyword', on_delete=models.PROTECT, verbose_name="Kalit so'z",blank=True, null=True)		
 	title = models.CharField('Tovar nomi',max_length=40)
 	author = models.CharField("Muallif",blank=True, max_length=80)
 	edition = models.CharField("Nashriyot",blank=True, max_length=80)
 	month = models.CharField("Oy",blank=True, max_length=15)
 	date = models.CharField("Sana",blank=True, max_length=12)
-	provider = models.ForeignKey(Provider,on_delete = models.CASCADE,verbose_name='Yetqazib beruvchi')
+	provider = models.ForeignKey(Provider,on_delete = models.CASCADE,verbose_name='Yetqazib beruvchi',blank=True, null=True)
 	description = models.TextField('Tovar haqida',max_length=350,blank=True)
 	image = models.ImageField('Foto Shart emas...',upload_to=image_folder,blank=True)
 	quantity = models.PositiveIntegerField('Ombordagi soni',default=0)
@@ -111,12 +126,17 @@ class Product(models.Model):
 
 
 class AddProductArchive(models.Model):
-	added_by = models.ForeignKey(UserAccount, on_delete=models.PROTECT, verbose_name="Qo'shdi",blank=True, null=True)		
-	product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="Tovar")
-	edition = models.CharField("Nashriyot",blank=True, max_length=80)
-	provider = models.ForeignKey(Provider,on_delete = models.CASCADE,verbose_name='Yetqazib beruvchi')
-	quantity = models.PositiveIntegerField('Ombordagi soni',default=0)
+	provider = models.ForeignKey(Provider,on_delete = models.PROTECT,verbose_name='Yetqazib beruvchi')
+	check_by = models.ForeignKey(UserAccount, on_delete=models.PROTECT, verbose_name="Qo'shdi",blank=True, null=True)		
+	product = models.ManyToManyField(Product, blank=True)
+	year = models.PositiveIntegerField('Yil',default=2020)
+	month = models.CharField("Oy",blank=True, max_length=12)
+	day = models.PositiveIntegerField('Kun',default=0)
+	quantity = models.PositiveIntegerField('Soni',default=0)
+	summa = models.PositiveIntegerField('Summa',default=0)
 	add_date = models.DateTimeField(auto_now_add=True)
+
+
 
 
 class CartItem(models.Model):
