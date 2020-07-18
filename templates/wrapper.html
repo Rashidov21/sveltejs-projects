@@ -21,7 +21,7 @@
     -->
         <script>   
         function playSound(filename){
-            var mp3Source = '<source src="/static/src/media/done.mp3" type="audio/mpeg">';
+            var mp3Source = '<source src="/static/src/media/notification.mp3" type="audio/mpeg">';
             var oggSource = '<source src="' + filename + '.ogg" type="audio/ogg">';
             var embedSource = '<embed hidden="true" autostart="true" loop="false" src="/static/src/media/notification.mp3">';
             document.getElementById("sound").innerHTML='<audio autoplay="autoplay">' + mp3Source + oggSource + embedSource + '</audio>';
@@ -32,6 +32,7 @@
         
  
       function ajax_function(url,value,cfunction) {
+        console.log("Working ");
         var data;
         if (window.XMLHttpRequest) {
         var xhttp=new XMLHttpRequest();
@@ -48,87 +49,11 @@
         xhttp.send();
         }
 
-		 <script>
-			  function ajax_func(url,value,cfunction) {
-				if (window.XMLHttpRequest) {
-				var xhttp=new XMLHttpRequest();
-				} else {  // code for IE6, IE5
-				var xhttp=new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				xhttp.onreadystatechange = function() {
-				if (xhttp.readyState === 4 && xhttp.status === 200) {
-				cfunction(xhttp);
-				}
-				};
-				xhttp.open("GET", url+"?value="+value, true);
-				xhttp.send();
-				} ; 
-
     
     </script>
   </head>
-<style>
-#alert-box{
-  width: 30%;
-  float: right;
-  top: 3.7rem;
-  left:55rem;
-  z-index: 400;
-  position: fixed;
-  display: none;
-}
-  .breadcrumb i{
-      padding-left:8px;
-  }
 
-
-  .breadcrumb i{
-      padding-left:8px;
-  }
-  #searchdiv{
-    display: none;
-    width:50%; 
-    top:3.5rem; 
-    left:25%; 
-    right:25%;  
-    text-align:center; 
-    padding:8px; 
-    font-size:20px; 
-    position:absolute; 
-    z-index:444;
-    border-radius:15px;
-    box-shadow:0px 1px 2px 2px black;
-
-  }
-  .card-body>a:hover{
-    text-decoration: none;
-  }
-  .card-img>img{
-    max-height: 200px;
-    max-width: 200px;
-  }
-  .card-img>img:hover{
-    transform: scale(1.1);
-    transition: 0.8s;
-  }
-#statistic_table{
-  border:solid 2px black;
-  border-top:none;
-  border-bottom:none;
-}
-    .content-blocker {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(136, 136, 204, 0.5);
-      z-index: 4444;
-    }
-  .index_card{
-    max-height: 350px;
-    max-width: 300px;  
-  }
+  <style>
     .card{
       box-shadow: 5px 8px 8px  #888888;
     }
@@ -147,21 +72,31 @@ $('.toast').toast();
 $('.toast').toast();
 -->
 
-<div class="toast fade show" style="width:300px; height:130px; background-color:white; padding:10px; box-shadow:5px 6px 8px black;" role="alert" aria-live="assertive" aria-atomic="true">
+<div class="toast fade show bg-{{ message.tags }}" style="width:300px; height:130px;  padding:10px; box-shadow:5px 6px 8px black;" role="alert" aria-live="assertive" aria-atomic="true">
   <div class="toast-header">
-    <strong class="mr-auto">Xabar</strong>
+    <strong class="mr-auto"><font color="white">Xabar</font></strong>
     <small></small>
     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
       <span aria-hidden="true" onclick="CloseToast()">×</span>
     </button>
   </div>
   <div class="toast-body">
-    {{ message }}
+    <font color="white">{{ message }}</font>
   </div>
 </div>
 </center>  
 </div>
- 
+  <style>
+    .content-blocker {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(136, 136, 204, 0.5);
+      z-index: 4444;
+    }
+  </style>
   <script>
 function CloseToast(){
   document.getElementById('blocker').style="display:none;";
@@ -177,14 +112,14 @@ function CloseToast(){
 
     <div class="adminx-container">
       <nav class="navbar navbar-expand justify-content-between fixed-top">
-        <a class="navbar-brand mb-0 h1 d-none d-md-block" href="{% url 'books:index' %}">
-          <img src="/static/logotype.svg" class="navbar-brand-image d-inline-block align-top mr-2" alt="">
+        <a class="navbar-brand mb-0 h1 d-none d-md-block" href="#">
+          <img src="/static/demo/img/logo.png" class="navbar-brand-image d-inline-block align-top mr-2" alt="">
           Book_Store
 
           
         </a>
 
-        <form class="form-inline form-quicksearch d-none d-md-block mx-auto">
+        <form id="search_form" class="form-inline form-quicksearch d-none d-md-block mx-auto">
           <div class="input-group">
             <div class="input-group-prepend">
               <div class="input-group-icon">
@@ -192,9 +127,12 @@ function CloseToast(){
               </div>
             </div>
         
-          <input type="text" id="search_input"   class="form-control" id="search" placeholder="Tovar izlash..." title="Tovar nomini kiriting...">
+          <input type="text" onkeyup="ajax_function('{% url 'product:search_product' %}',this.value,SearchProduct)"  class="form-control" id="search" placeholder="Tovar izlash..." title="Tovar nomini kiriting...">
           </div>
         </form>
+
+     
+
 
         <div class="d-flex flex-1 d-block d-md-none">
           <a href="#" class="sidebar-toggle ml-3">
@@ -207,18 +145,18 @@ function CloseToast(){
           {% if not close_wrapper_cart %}
           <div class="animate">
           <li class="nav-item dropdown d-flex align-items-center mr-2">
-            <a class="cartt nav-link nav-link-notifications mt-2 " title="Savatcha" id="dropdownNotifications" data-toggle="dropdown" href="#">
-              <i id="cart_icon"  data-feather='shopping-cart' class="display-inline-block align-middle h5"></i>
+            <a class="cartt nav-link nav-link-notifications mt-2" title="Savatcha" id="dropdownNotifications" data-toggle="dropdown" href="#">
+              <i id="cart_icon" class="oi oi-cart display-inline-block align-middle"></i>
               <span class="nav-link-notification-number" id="cart_items_total">{{ cart.items.count }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-notifications" aria-labelledby="dropdownNotifications" style="max-width:30rem;   padding-bottom:5px;">
               <div class="notifications-header d-flex justify-content-between align-items-center">
                 <span class="notifications-header-title">
-                  Savatcha  <i id="all_count" class="text-primary"></i> 
+                    Jami tovar soni <i id="all_count" class="text-primary">{{ cart.all_qty }}</i> 
                 </span>
-                <a href="{% url 'books:page_views' 'cart' %}" class="d-flex"><strong>Jami summa <b id="itog">{{ cart.cart_total}}</b>  </strong></a>
+                <strong>Jami summa <b id="itog" class="text-primary">{{ cart.cart_total}}</b>  </strong>
               </div>
-                <form action="#" id="cart_form">
+               
                   
               <div class="list-group" id="cart_wrapper">
                 
@@ -251,186 +189,11 @@ function CloseToast(){
 
 
 
+
 {% include 'includes/wrapper_ajax.html'%}
 
 
-<script>
-window.onload = ajax_func('{% url 'product:loading_cart' %}','ok', LoadingCart);
- 
-function LoadingCart(xhttp){
-  var data = JSON.parse(xhttp.responseText); 	
-  console.log(data.list.length);
-var cart_wrapper = document.getElementById('cart_wrapper');
-  if(data.list.length == 0){
-cart_wrapper.innerHTML = '<div class="text-center mb-2 mt-2"><h4>Band</h4></div>';
-  }else{
-  
-var a = '<div>';
-for(var i=0; i<data.list.length;i++){
 
-  a+='<a href="#" id="cart_list_id_'+data.list[i].product_id+'" class="list-group-item list-group-item-action unread"><big>Tanlangan soni :<input type="number" id="cart_product_item" onchange="ChangeQtyCart('+data.list[i].id+', this.value)" style="width:100px;" placeholder="'+data.list[i].qty+'" class=""></big>';
-
-  a+='<p class="mb-1" style="font-size:18px;"><strong>'+data.list[i].title+'</strong> <i class="text-info">'+data.list[i].category+ '</i>';
-
-  a+=' <strong id="item_total-'+data.list[i].id+'">'+data.list[i].cur_price+'<sup><i>uzs</i> </sup></strong> </p>'
-
-  a+=' <div class="mb-1"><button type="button" class="btn btn-primary btn-sm">To`lov</button><button type="button" onclick="DeleteProductFromCart('+data.list[i].product_id+','+data.list[i].id+')" class="btn btn-outline-danger btn-sm">Savatchadan o`chirish</button></div>';
-
-  a+='<big style="color:red;">Omborda '+data.list[i].product_total+' ta  qoldi</big></a>';
-
-}
-a+='</div>';
-cart_wrapper.innerHTML=a;
-    }
-}
-
-
- function AddToCart(product_id){
- 
-  if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-  } else {  // code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.onreadystatechange=function() {
-    if (this.readyState==4 && this.status==200) {
-    var data = JSON.parse(this.responseText);
-  console.log(data);
-  if(data.code == 200){
-
-  document.getElementById('cart_items_total').innerHTML=data.cart_total;
-  document.getElementById('td_product_quantity_'+product_id).innerHTML=data.product_total;
-  playSound('bing');
-    document.getElementById("dynamic_bg").className +="alert alert-success";
-   document.getElementById("alert_title").innerHTML="Bajarildi!";
-    document.getElementById("alert_body").innerHTML="Tovar savatchaga qo'shildi!";
-  document.getElementById('show_alert').click();
-  LoadingCart();
-}
-else if(data.code == 500){
-    document.getElementById("alert_title").innerHTML="Xatolik!";
-    document.getElementById("alert_body").innerHTML="Tovar bazada 0 dona qolgan";
-    document.getElementById("dynamic_bg").className +="alert alert-danger";
-  document.getElementById('show_alert').click();
-}
-else if(data.code == 400){
-    document.getElementById("alert_title").innerHTML="Ogoxlantirish!";
-    document.getElementById("alert_body").innerHTML="Tovar savatchaga qo'shilgan!";
-    document.getElementById("dynamic_bg").className +="alert alert-warning";
-  document.getElementById('show_alert').click();
-}
-
-
-else{
-
-}
-
-
-    }
-  }
-  var url = "{% url 'product:add_to_cart' %}"
-  var url = url+"?product_id="+product_id;
-  xmlhttp.open("GET",url,true);
-  xmlhttp.send();
-  }
-  function ChangeQtyCart(item_id,qty){
-
-    // console.log(qty);
-    // var item_id = document.getElementById('item_id').value;
-    // var qty = document.getElementById('cart_product_item').value;
-    console.log(item_id);
-    var valu = {'item_id':item_id,'qty':qty};
-    var value = JSON.stringify(valu);
-      if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-  } else {  // code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.onreadystatechange=function() {
-    if (this.readyState==4 && this.status==200) {
-    var data = JSON.parse(this.responseText);
-  console.log(data);
-
-document.getElementById('itog').innerHTML=data.cart_total_price;
-document.getElementById('all_count').innerHTML="Jami tovar soni "+data.all_product_count;
-document.getElementById('cart_items_total').innerHTML=data.cart_total;
-
-
-    }
-  }
-  var url = "{% url 'product:change_item_qty' %}"
-  var url = url+"?value="+value;
-  xmlhttp.open("GET",url,true);
-  xmlhttp.send();
-  }
-
-  window.onload = ResetForm();
-
-  function ResetForm(){
-    document.getElementById('cart_form').reset();
-  }
-
-
- 
-
- function DeleteProductFromCart(product_id,item_id){
-  console.log(product_id);
-  console.log(item_id);
-  var valu = {'item_id':item_id,'product_id':product_id};
-    var value = JSON.stringify(valu);
-    if (window.XMLHttpRequest) {
-    // code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-  } else {  // code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  }
-  xmlhttp.onreadystatechange=function() {
-    if (this.readyState==4 && this.status==200) {
-    var data = JSON.parse(this.responseText);
-  console.log(data);
-if(data.status == 'ok'){
-document.getElementById('itog').innerHTML=data.cart_total_price;
-document.getElementById('all_count').innerHTML="Jami tovar soni "+data.all_product_count;
-LoadingCart();
-// document.getElementById('cart_list_id_'+product_id).style="display:none;";
-document.getElementById('cart_items_total').innerHTML=data.cart_total;
-}
-
-    }
-  }
-  var url = "{% url 'product:remove_from_cart_view' %}"
-  var url = url+"?value="+value;
-  xmlhttp.open("GET",url,true);
-  xmlhttp.send();
-  }
-</script>
-
-
-<script>
-//   function MyAlertBox(title,text){
-//     window.setTimeout(function() {
-//     document.getElementById("alert_title").innerHTML=title;
-//     document.getElementById("alert_body").innerHTML=text;
-//     $(".alert").fadeTo(500, 0).slideUp(500, function(){
-//         $(this).remove(); 
-//     });
-// }, 2000);
-//   }
-
-$(document).ready(function MyAlertBox(){
-$('#show_alert').on('click',function(){
-  $('#alert-box').show(1000, function(){
-  setTimeout(function(){
-    $('#alert-box').hide(1000);
-  }, 1500);
-});
-});
-});
- 
-
-</script>
 
 <button id="show_alert"  style="display:none;" type="button">Click me </button>
 
@@ -459,23 +222,81 @@ function checkTime(i) {
 }
 </script>
 
+
+
+
+
+
 <nav aria-label="breadcrumb" id="searchdiv" class="bg-light p-3 mb-5">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item  text-center" aria-current="page" style="margin:7px auto;"> <b>O'tgan kunlar</b> <i class="text-primary">Badiiy adabiyotlar</i> <i class="text-info">18</i> <small>dona</small> <i class="text-info">46000</i> <small>uzs</small> <a href="#" class="btn btn-sm btn-outline-success"><i data-feather="shopping-cart"></i></a> <a href="#" class="btn btn-sm btn-outline-primary"><i data-feather="edit"></i></a></li>
-
-        <li class="breadcrumb-item  text-center" aria-current="page" style="margin:7px auto;"> <b>O'tgan kunlar</b> <i class="text-primary">Badiiy adabiyotlar</i> <i class="text-info">18</i> <small>dona</small> <i class="text-info">46000</i> <small>uzs</small> <a href="#" class="btn btn-sm btn-outline-success"><i data-feather="shopping-cart"></i></a> <a href="#" class="btn btn-sm btn-outline-primary"><i data-feather="edit"></i></a></li>
- 
-      <li class="breadcrumb-item  text-center" aria-current="page" style="margin:7px auto;"> <b>O'tgan kunlar</b> <i class="text-primary">Badiiy adabiyotlar</i> <i class="text-info">18</i> <small>dona</small> <i class="text-info">46000</i> <small>uzs</small> <a href="#" class="btn btn-sm btn-outline-success"><i data-feather="shopping-cart"></i></a> <a href="#" class="btn btn-sm btn-outline-primary"><i data-feather="edit"></i></a></li>
-
-      <li class="breadcrumb-item  text-center" aria-current="page" style="margin:7px auto;"> <b>O'tgan kunlar</b> <i class="text-primary">Badiiy adabiyotlar</i> <i class="text-info">18</i> <small>dona</small> <i class="text-info">46000</i> <small>uzs</small> <a href="#" class="btn btn-sm btn-outline-success"><i data-feather="shopping-cart"></i></a> <a href="#" class="btn btn-sm btn-outline-primary"><i data-feather="edit"></i></a></li>
- 
+  <ol class="breadcrumb" id="search_results">
   </ol>
 </nav>
+ <script>
+function SearchProduct(data){
+    var searchdiv = document.getElementById('searchdiv');
+    var search_results = document.getElementById('search_results');
+  if(data.list.length > 0){
+    var div = '<div>';
+    for(var i=0; i<data.list.length; i++){
+      div +='<li class="breadcrumb-item  text-center" aria-current="page" style="margin:7px auto;"> <b>'+data.list[i].title+'</b><a href="http://localhost:8000/product/catalog/'+data.list[i].category_id+'"> <i class="text-primary">'+data.list[i].category+'</i></a> <i class="text-muted">'+data.list[i].author+'</i><i class="text-info">'+data.list[i].quantity+'</i> <small>dona</small> <i class="text-info">'+data.list[i].price+'</i> <small>uzs</small> <a href="#" onclick="AddToCart('+data.list[i].product_id+')" ><img class="cart_svg" src="{% static "src/images/addcart.svg" %}" width="40"></a> <a href="#" class="btn btn-sm btn-outline-primary"><i data-feather="edit"></i></a></li>'
+    }
+    div += '</div>';
+    search_results.innerHTML = div;
+    searchdiv.style = 'display:block';
+
+  }
+  else{
+    var div = '<li class="breadcrumb-item  text-center" aria-current="page" style="margin:7px auto;">Ma`lumot topilmadi</li>';
+    searchdiv.style = 'display:none';
+  }
+    search_results.innerHTML = div;
+
+}
+ </script>  
+<style>
+.cart_svg: hover{
+  width:60px;
+  background:orange;
+}
+
+#alert-box{
+  width: 30%;
+  float: right;
+  top: 3.7rem;
+  left:55rem;
+  z-index: 445;
+  position: fixed;
+  display: none;
+}
+  .breadcrumb i{
+      padding-left:8px;
+  }
+
+
+  .breadcrumb i{
+      padding-left:8px;
+  }
+  #searchdiv{
+    display: none;
+    width:65%; 
+    top:3.5rem; 
+    left:22.5%; 
+    right:22.5%;  
+    text-align:center; 
+    padding:8px; 
+    font-size:20px; 
+    position: fixed; 
+    z-index:444;
+    border-radius:15px;
+    box-shadow:0px 1px 2px 2px black;
+
+  }
+</style>
 
 
 
 
-      <!-- expand-hover push -->
+     <!-- expand-hover push -->
       <!-- Sidebar -->
       <div class="adminx-sidebar expand-hover push">
         <ul class="sidebar-nav">
@@ -622,7 +443,7 @@ function checkTime(i) {
                   </span>
                 </a>
               </li>
-				<li class="sidebar-nav-item">
+        <li class="sidebar-nav-item">
                 <a href="{% url 'books:page_views' 'add' %}" class="sidebar-nav-link">
                   <span class="sidebar-nav-abbr">
                     F
