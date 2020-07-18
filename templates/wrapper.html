@@ -21,7 +21,7 @@
     -->
         <script>   
         function playSound(filename){
-            var mp3Source = '<source src="/static/src/media/notification.mp3" type="audio/mpeg">';
+            var mp3Source = '<source src="/static/src/media/done.mp3" type="audio/mpeg">';
             var oggSource = '<source src="' + filename + '.ogg" type="audio/ogg">';
             var embedSource = '<embed hidden="true" autostart="true" loop="false" src="/static/src/media/notification.mp3">';
             document.getElementById("sound").innerHTML='<audio autoplay="autoplay">' + mp3Source + oggSource + embedSource + '</audio>';

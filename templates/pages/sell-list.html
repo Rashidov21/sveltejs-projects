@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="col-md-9">
-                       <div class="row">
+                    <div class="row">
                 <div class="col-12">
                   <div class="card mb-grid">
                   <div class="card-header d-flex justify-content-between align-items-center">
@@ -53,70 +53,51 @@
                   <div class="table-responsive-sm">
                     <table class="table table-actions table-striped table-hover mb-0">
                       <thead>
-                        <tr class="text-center">
+                        <tr>
                           <th scope="col">
                             <label class="custom-control custom-checkbox m-0 p-0">
                               <input type="checkbox" class="custom-control-input table-select-all">
                               <span class="custom-control-indicator"></span>
                             </label>
                           </th>
-                          <th scope="col">Xaridor</th>
-                          <th scope="col">Sanasi</th>
-                          <th scope="col">Soni</th>
-                          <th scope="col">Summasi</th>
-                          <th scope="col">Ma'sul</th>
-                          <th scope="col">Status</th>
-                          <th scope="col">Batafsil</th>
+                          <th scope="col">Nomi</th>
+                          <th scope="col">Kategoriyasi</th>
+                          <th scope="col">Muallifi</th>
+                          <th scope="col">Nashriyoti</th>
+                          <th scope="col">Omborda</th>
+                          <th scope="col">Narxi(K)</th>
+                          <th scope="col">Narxi(S)</th>
+                          <th scope="col">Tahrirlash</th>
                         </tr>
                       </thead>
                       <tbody style="color:black;font-weight:700;">
-                          <tr class="text-center">
+                        <tr>
                           <th scope="row">
                             <label class="custom-control custom-checkbox m-0 p-0">
                               <input type="checkbox" class="custom-control-input table-select-row">
                               <span class="custom-control-indicator"></span>
                             </label>
                           </th>
-                          <td>NUR ZIYO MCHJ</td>
-                          <td><b>08/08/2020</b></td>
-                          <td>65</td>
-                          <td style="color:blue;"><b>UZS </b>445.000</td>
-                          <td>Abdullo Abdullayev </td>
+                          <td>O'tgan kunlar</td>
+                          <td>O'zbek adabiyoti</td>
+                          <td>Abdulla Qodiriy</td>
+                          <td>Hilol </td>
+                          <td><b>UZS </b>45.000</td>
                           <td style="color:blue;">
-                            <i data-feather="check"></i>
+                            <span>1548 dona</span>
                           </td>
-                          <td><button type="button" class="btn btn-sm btn-outline-success"><i data-feather="eye"></i></button></td>
+                          <td style="color:green;">
+                            <b>UZS </b>50.000
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal3" title="Tanlangan tovarni tahrirlash"><i data-feather="shopping-cart"></i></button>
+                            <button class="btn btn-sm btn-danger" onclick="playSound('bing');" title="Tozarni savatchadan o'chirish"><i data-feather="trash"></i></button>
+                            <div id="sound"></div>
+                          </td>
                         </tr>
+                  
                       </tbody>
                     </table>
-                  </div>
-                  <div class="card-footer">
-                     <div class="pagination ml-2">
-                    
-                      <nav aria-label="...">
-                      <ul class="pagination">
-
-                      <li class="page-item {% if not prev_url %} disabled {% endif %}">
-                        <a class="page-link" href="{{ prev_url }}" tabindex="-1">Oldingi</a>
-                      </li>
-
-                      {% for n in page_object.paginator.page_range  %}
-
-                        {% if page_object.number == n %}
-                      <li class="page-item active">
-                        <a class="page-link" href="?page={{ n }}">{{ n }} <span class="sr-only">(current)</span></a>
-                      </li>
-                      {% elif n > page_object.number|add:-3 and n < page_object.number|add:3%}
-                      <li class="page-item"><a class="page-link" href="?page={{ n }}">{{ n }}</a></li>
-                      {% endif %}
-                      {% endfor %}
-                      <li class="page-item {% if not next_url %} disabled {% endif %}">
-                        <a class="page-link" href="{{ next_url }}">Keyingi </a>
-                      </li>
-                      </ul>
-                      </nav>
-                </div>
-       
                   </div>
                 </div>
                 </div>
