@@ -1,2 +1,2 @@
-# _Book
- my book_store project
+# Book
+ Book shop web application

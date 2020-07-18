@@ -74,3 +74,17 @@ def add_provider(request):
 	# except:	
 	# 	data['status'] = 'error'
 	return JsonResponse(data)	
+
+
+def edit_product(request):
+	try:
+		product_id = request.GET.get('value')
+		p = Product.objects.get(id=product_id)
+		data = {'status':'ok','title':p.title,'pur_price':p.pur_price,'cur_price':p.cur_price,
+			'qty':p.quantity,'author':p.author,
+			'edition':p.edition,'info':p.description,'id':p.id}
+	except:
+		data = {'status':'error'}		
+
+			
+	return JsonResponse(data)		

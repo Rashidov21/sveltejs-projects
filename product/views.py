@@ -33,7 +33,7 @@ class ArchiveAddProduct(View):
 					'prev_url':paginator['prev_url']}
 		context['get'] = True
 		context['page_object'] = paginator['page_object']
-		return render(request, 'product/archive.html',context)
+		return render(request, 'product/products.html',context)
 
 	def post(self, request):
 		setting = Settings.objects.latest('-id')
@@ -53,7 +53,7 @@ class ArchiveAddProduct(View):
 			context = {'day':day,'setting':setting,'month':month,'categories':categories,'year':year,
 					'is_paginated':paginator['is_paginated'],'next_url':paginator['next_url'],
 					'prev_url':paginator['prev_url'],'page_object':paginator['page_object']}
-			return render(request, 'product/archive.html',context)
+			return render(request, 'product/products.html',context)
 		except:
 			c_id = None
 		try:			
@@ -68,9 +68,9 @@ class ArchiveAddProduct(View):
 			context = {'day':day,'setting':setting,'month':month,'categories':categories,'year':year,
 					'is_paginated':paginator['is_paginated'],'next_url':paginator['next_url'],
 					'prev_url':paginator['prev_url'],'page_object':paginator['page_object']}
-			return render(request, 'product/archive.html',context)
+			return render(request, 'product/products.html',context)
 		except:
-			return HttpResponseRedirect(reverse('product:archive_product'))
+			return HttpResponseRedirect(reverse('product:products'))
 
 def catalog_view(request,catalog_id):
 	try:
@@ -148,3 +148,51 @@ def toprint(request,client_id):
 		return HttpResponseRedirect(reverse('product:invoice'))
 	context = {'client':client,'cart':cart}
 	return render(request ,'pages/toprint.html',context)
+
+
+def check_products(request):
+	if request.method == 'POST':
+		setting = Settings.objects.latest('-id')
+		provider_id = request.POST['provider']
+		provider = Provider.objects.get(id=provider_id)
+		products = Product.objects.filter(check=False)
+		u = request.user
+		user = UserAccount.objects.get(user=u)
+		if products.count() > 0:
+			try:
+				archiv = AddProductArchive.objects.get(year=year,month=month,day=day,provider=provider)
+				if setting.add_products_for_one_provider_at_one_day_with_one_list:
+					quantity = 0
+					summa = 0
+					for p in products:
+						archiv.product.add(p)
+						quantity += p.quantity
+						summa += p.pur_price
+						p.check = True
+						p.save()
+						archiv.save()
+					archiv.quantity += quantity	
+					archiv.summa += summa	
+					archiv.save()
+					messages.add_message(request,messages.SUCCESS, "Tovarlar muvaffaqiyatli tasdiqlandi!")
+					return HttpResponseRedirect(reverse('books:add'))
+			except:	
+				archiv = AddProductArchive.objects.create(check_by=user,provider=provider,
+						year=year,month=month,day=day)
+			quantity = 0
+			summa = 0
+			print(type(archiv))
+			for p in products:
+				archiv.product.add(p)
+				quantity += p.quantity
+				summa += p.pur_price
+				p.check = True
+				p.save()
+				archiv.save()
+			archiv.quantity += quantity	
+			archiv.summa += summa	
+			archiv.save()
+			messages.add_message(request,messages.SUCCESS, "Tovarlar muvaffaqiyatli tasdiqlandi!")
+			return HttpResponseRedirect(reverse('books:add'))
+
+

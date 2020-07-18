@@ -1,10 +1,17 @@
 from django.contrib import admin
 from .models import *
 
+
+admin.site.register(Position)
 # Register your models here.
 @admin.register(UserAccount)
 class UserAccountAdmin(admin.ModelAdmin):
 	list_display = ['user','position','name']
+
+@admin.register(AddProductArchive)
+class AddProductArchiveAdmin(admin.ModelAdmin):
+	list_display = ['check_by','provider','month','summa','quantity']
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -33,3 +40,6 @@ class CartItemAdmin(admin.ModelAdmin):
 class CartAdmin(admin.ModelAdmin):
 	list_display = ['id','cart_total']
 						
+@admin.register(KeyWord)
+class KeyWordAdmin(admin.ModelAdmin):
+	list_display = ['key','date','qty','summa','user']

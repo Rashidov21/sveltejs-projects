@@ -15,5 +15,6 @@ urlpatterns = [
     path('search_subcategory', search_subcategory, name='search_subcategory'),
     path('page/<str:page_name>', page_views, name='page_views'),
     path('cart', cart_view, name='cart_view'),
+    path('edit_product', edit_product, name='edit_product'),
  
 ]

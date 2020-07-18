@@ -7,7 +7,7 @@ app_name = 'product'
 
 urlpatterns = [ 
 
-    path('archive', ArchiveAddProduct.as_view(), name="archive_product" ),
+    path('archive', ArchiveAddProduct.as_view(), name="products" ),
     path('search/date', search_date, name="search_date" ),
     path('add_to_cart', add_to_cart_view, name="add_to_cart" ),
     path('change_item_qty', change_item_qty, name="change_item_qty" ),
@@ -21,5 +21,6 @@ urlpatterns = [
     path('add_client', add_client, name="add_client" ),
     path('search_product', search_product, name="search_product" ),
     path('toprint/<int:client_id>', toprint, name="toprint" ),
+    path('check', check_products, name="check_products" ),
 
 ]

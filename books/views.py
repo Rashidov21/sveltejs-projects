@@ -35,9 +35,11 @@ class AddProduct(View):
 		categories = Category.objects.all()
 		providers = Provider.objects.all()
 		last_products = Product.objects.filter(check=False)
+		product_count = last_products.count()
 		paginator = paginate_generator(request,last_products)
 		context = {'categories':categories,'providers':providers,'is_paginated':paginator['is_paginated'],'next_url':paginator['next_url'],'prev_url':paginator['prev_url']}
 		context['page_object'] = paginator['page_object']
+		context['product_count'] = product_count
 		return render(request, 'product/add.html',context)
 
 	def post(self, request):
@@ -73,8 +75,7 @@ class AddProduct(View):
 			title=title,author=create_fields['author'],edition=create_fields['edition'],
 			provider=provider,date=today,description=create_fields['info'],quantity=quantity,
 			pur_price=pur_price,cur_price=cur_price)
-		a = AddProductArchive.objects.create(product=p,edition=create_fields['edition'],provider=provider,
-							quantity=quantity)
+		
 		messages.add_message(request,messages.SUCCESS,"Tovar qo'shildi")
 		return HttpResponseRedirect(reverse('books:add'))									
 
