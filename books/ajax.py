@@ -1,6 +1,8 @@
 from django.http import HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 from .models import *
+from .bot import *
+from .views import admin_order_pdf
 from django.contrib.auth  import get_user_model
 User = get_user_model()
 import json
@@ -87,4 +89,30 @@ def edit_product(request):
 		data = {'status':'error'}		
 
 			
+	return JsonResponse(data)
+
+
+def send_add_pdf(request):
+	delivery_id = request.GET.get('value')
+	delivery = AddProductArchive.objects.get(id=delivery_id)
+	data = {}
+	if delivery.save_as_folder:
+		res = send_add_list_product(delivery_id)
+		if res == 'ok':
+			data['status'] = 'ok'
+			return JsonResponse(data)		
+		else:	
+			data['status'] = 'error'
+	else:
+		res = admin_order_pdf(request,bot=True)
+		if res['status'] == 'ok':
+			res = send_add_list_product(delivery_id)
+			if res == 'ok':
+				data['status'] = 'ok'
+				return JsonResponse(data)		
+			else:	
+				data['status'] = 'error'
+		else:			
+			data['status'] = 'error'
 	return JsonResponse(data)		
+

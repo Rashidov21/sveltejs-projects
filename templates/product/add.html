@@ -350,9 +350,14 @@
 
 
 
+
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal3Label" aria-hidden="true">
   <div class="modal-dialog" role="document">
+    <form action="{% url 'books:edit_info_product'%}" method="POST">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModal3Label">Tahrirlash</h5>
@@ -367,18 +372,16 @@
                     <div class="card-header-title">Tahrirlash oynasi</div>
                   </div>
                   <div class="card-body">
-                    <div class="form-group">
+                    
+                        <div class="form-group">
                         <label class="form-label"><b>Asosiy katalog</b></label>
                       <select name="category" required onclick="SearchSubCategory(this.value)" id="categories" class="form-control js-choice">
-                        <option  selected disabled>--- -- ---</option>
+                        <option  selected disabled>--- -- ---</option>   
                         
                         {% for c in categories %}
-                   
-                     
-                   
                         <option value="{{ c.id }}">{{ c }}</option>
-               
                         {% endfor %}
+                      
                       </select>
                     </div>
                
@@ -392,48 +395,51 @@
                    
                   <div class="form-group">
                       <label class="form-label"><b>Nomi</b></label>
-                      <input class="form-control mb-2 input-credit-card" type="text" id="name" placeholder="Nomi">
+                      <input class="form-control mb-2 input-credit-card" type="text" id="name" name="title" placeholder="Nomi">
                     </div>
                     <div class="form-group">
                       <label class="form-label">Muallifi</label>
-                      <input id="author" class="form-control input-date mb-2" type="text" placeholder=" ">
+                      <input id="author" name="author" class="form-control input-date mb-2" type="text" placeholder=" ">
                     </div>
                     <div class="form-group">
                       <label class="form-label">Nashriyoti</label>
-                      <input id="edition" class="form-control input-date mb-2" type="text" placeholder=" ">
+                      <input id="edition" name="edition" class="form-control input-date mb-2" type="text" placeholder=" ">
                     </div>
                     <div class="form-group">
                       <label class="form-label"><b>Kelish narxi</b></label>
-                      <input id="pur_price" class="form-control input-date mb-2" type="number" placeholder="UZS ">
+                      <input id="pur_price" name="pur_price" class="form-control input-date mb-2" type="number" placeholder="UZS ">
                     </div>
                     <div class="form-group">
                       <label class="form-label"><b>Sotilish narxi</b></label>
-                      <input id="cur_price" class="form-control input-date mb-2" type="number" placeholder="UZS ">
+                      <input id="cur_price" class="form-control input-date mb-2" type="number" name="cur_price" placeholder="UZS ">
                     </div>
                      <div class="form-group">
                       <label class="form-label"><b>Soni</b></label>
-                      <input id="qty" class="form-control input-date mb-2" type="number" placeholder="Soni">
+                      <input id="quantity" name="quantity" class="form-control input-date mb-2" type="number" placeholder="Soni">
                     </div>
-                      <div class="form-group">
+                    <div class="form-group">
                       <label class="form-label">Qoshimcha ma'lumot</label>
-                      <input id="info" class="form-control mb-2 input-credit-card" type="text" placeholder="Qisqa ma'lumot">
+                      <input id="info" name="description" class="form-control mb-2 input-credit-card" type="text" placeholder="Qisqa ma'lumot">
                       <input type="hidden" name="product_id" id="product_id">
                     </div>
+                  
+
                   </div>
                   <div class="card-footer">
-                    <p>Ushbu tahrirlash oynasi orqali savatchaga olingan tovarlarni narxlarini va donasini mijoz talabiga (kelishuvga asosan) o'zgartirish mumkin.</p>
+                    <p>Ushbu tahrirlash oynasi orqali  tovar xaqidagi ma'lumotlarni o'zgartirish mumkin.</p>
                   </div>
                 </div>
         </div>
       </div>
+      {% csrf_token %}
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Yopish</button>
-        <button type="button" class="btn btn-primary">Saqlash</button>
+        <input type="submit" class="btn btn-primary" value="Saqlash">
       </div>
     </div>
+    </form>
   </div>
 </div>
-
 
                   
 <script>
@@ -444,7 +450,7 @@ function EditProduct(product_id){
   var author = document.getElementById('author');
   var pur_price = document.getElementById('pur_price');
   var cur_price = document.getElementById('cur_price');
-  var qty = document.getElementById('qty');
+  var quantity = document.getElementById('quantity');
   var info = document.getElementById('info');
   var product_id = document.getElementById('product_id');
    
@@ -463,9 +469,9 @@ function EditProduct(product_id){
           author.value = data.author;
           pur_price.value = data.pur_price;
           cur_price.value = data.cur_price;
-          qty.value = data.qty;
+          quantity.value = data.qty;
           info.value = data.info;
-          product_id.value = data.product_id;
+          product_id.value = data.id;
         }
 
         }
@@ -622,6 +628,5 @@ else if(add_provider_field_adress.length == 0 ){
 } 
 }
 
-</script>
 </script>
   {% endblock %}

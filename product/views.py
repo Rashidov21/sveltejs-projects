@@ -162,37 +162,34 @@ def check_products(request):
 			try:
 				archiv = AddProductArchive.objects.get(year=year,month=month,day=day,provider=provider)
 				if setting.add_products_for_one_provider_at_one_day_with_one_list:
-					quantity = 0
-					summa = 0
 					for p in products:
 						archiv.product.add(p)
-						quantity += p.quantity
-						summa += p.pur_price
+						summa = int(p.pur_price) * int(p.quantity)
+						archiv.summa += summa
+						archiv.quantity += int(p.quantity)
 						p.check = True
 						p.save()
 						archiv.save()
-					archiv.quantity += quantity	
-					archiv.summa += summa	
-					archiv.save()
 					messages.add_message(request,messages.SUCCESS, "Tovarlar muvaffaqiyatli tasdiqlandi!")
 					return HttpResponseRedirect(reverse('books:add'))
-			except:	
+				else:
+					ArchiveAddProduct.otnekt.all()	
+			except:
 				archiv = AddProductArchive.objects.create(check_by=user,provider=provider,
-						year=year,month=month,day=day)
-			quantity = 0
-			summa = 0
-			print(type(archiv))
-			for p in products:
-				archiv.product.add(p)
-				quantity += p.quantity
-				summa += p.pur_price
-				p.check = True
-				p.save()
-				archiv.save()
-			archiv.quantity += quantity	
-			archiv.summa += summa	
-			archiv.save()
-			messages.add_message(request,messages.SUCCESS, "Tovarlar muvaffaqiyatli tasdiqlandi!")
-			return HttpResponseRedirect(reverse('books:add'))
+					year=year,month=month,day=day)
+				for p in products:
+					archiv.product.add(p)
+					summa = int(p.pur_price) * int(p.quantity)
+					archiv.summa += summa
+					archiv.quantity += p.quantity
+					p.check = True
+					p.save()
+					archiv.save()
+				messages.add_message(request,messages.SUCCESS, "Tovarlar muvaffaqiyatli tasdiqlandi!")
+				return HttpResponseRedirect(reverse('books:add'))	
+		
+	messages.add_message(request,messages.WARNING, "Xatolik yuz berdi!")
+	return HttpResponseRedirect(reverse('books:add'))	
+		
 
 

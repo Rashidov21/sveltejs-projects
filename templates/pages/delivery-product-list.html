@@ -48,23 +48,23 @@
           <div class="card-header">
             <div class="d-flex justify-content-between mb-0">
               <h3 class="card-title mb-0">
-                <tt>NUR ZIYO MCHJ</tt> dan  qabul qilingan tovarlar 
+                <tt>{{ delivery.provider.name }}</tt> dan  qabul qilingan tovarlar 
               </h3>
 
               <div class="card-title-sub">
                  <ul class="list-unstyled">
                     <li class="d-inline-block">
-                      <a href="#" class="btn btn-info btn-md" title="PDF ko'rinishida saqlash">
+                      <a href="#" id="pdfbutton" {% if delivery.save_as_folder %}style="opacity:0.5;"{% else %} onclick="GenaratePdf({{ delivery.id }})" {% endif %} class="btn btn-info btn-md" title="PDF ko'rinishida saqlash">
                         <i data-feather="save"></i>
                       </a>
                     </li>
                     <li class="d-inline-block">
-                       <a href="#" class="btn btn-info btn-md" title="Chop etish">
+                       <a href="{% url 'books:print_me' delivery.id %}" class="btn btn-info btn-md" title="Chop etish">
                         <i data-feather="printer"></i>
                       </a>
                     </li>
                     <li class="d-inline-block">
-                       <a href="#" class="btn btn-info btn-md"  title="PDF ko'rinishida yuborish">
+                       <a href="#" id="pdfbot" onclick="BotSendPdf({{ delivery.id }})" class="btn btn-info btn-md"  title="PDF ko'rinishida yuborish">
                         <i data-feather="share"></i>
                       </a>
                     </li>
@@ -75,18 +75,13 @@
           <div class="card-body d-flex flex-column">
             <div class="row">
               <div class="col-sm-6">
-               <h4>Sana: <tt>08/08/2020</tt></h4> 
+               <h4>Sana: <tt>{{ delivery.day}}-{{ delivery.month}}{{ delivery.year}}</tt></h4> 
               </div>
               <div class="col-sm-6">
-                <h4>Ombor xodimi: <tt>Abdullo Abdullayev</tt></h4>
+                <h4>Qabul qildi: <tt>{{ delivery.check_by }}</tt></h4>
               </div>
             </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <h4><tt>Tovarlar :</tt></h4>
-              </div>
-              
-            </div>
+          
             <div class="row">
              <div class="col-md-12">
                <div class="table-responsive-sm">
@@ -103,11 +98,12 @@
                           <th scope="col">Kategoriyasi</th>
                           <th scope="col">Narxi 1 dona uchun</th>
                           <th scope="col">Soni</th>
-                          <th scope="col">Umumiy summasi</th>
+
                      
                         </tr>
                       </thead>
                       <tbody style="color:black;font-weight:700;">
+                        {% for p in page_object %}
                         <tr>
                           <th scope="row">
                             <label class="custom-control custom-checkbox m-0 p-0">
@@ -115,14 +111,14 @@
                               <span class="custom-control-indicator"></span>
                             </label>
                           </th>
-                          <td>O'tgan kunlar</td>
-                          <td>O'zbek adabiyoti</td>
-                          <td>40.500 <i>UZS </i></td>
-                          <td>10 </td>
-                          <td>450.000<i>UZS </i></td>
+                          <td>{{ p.title }}</td>
+                          <td>{{ p.category }}</td>
+                          <td>{{ p.pur_price }} <i>uzs </i></td>
+                          <td>{{ p.quantity }} </td>
+
                 
                         </tr>
-                  
+                        {% endfor %}
                       </tbody>
                     </table>
                   </div>
@@ -133,7 +129,7 @@
               <div class="row">
                 <div class="col-sm-8"></div>
                 <div class="col-sm-4">
-                  <h4><tt>Umumiy summa : 450.000<i>UZS </i></tt></h4>
+                  <h4><tt>Umumiy summa : {{ delivery.summa }} <i>uzs</i></tt></h4>
                 </div>
               </div>
 <div class="pagination ml-2">                    
@@ -170,5 +166,144 @@
 </div>
 </div>
 </div>
+<script>
+  function GenaratePdf(delivery_id){
+    console.log(delivery_id);
+    var value = delivery_id;
+    var loading = document.getElementById('blocked').style='display:block';
+       if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    var data = JSON.parse(this.responseText);
+console.log(data);
+if(data.status == 'ok'){
 
+    var loading = document.getElementById('blocked').style='display:none';
+    var pdfbutton = document.getElementById('pdfbutton').style='opacity:0.5;';
+
+     document.getElementById("alert_title").innerHTML="Bajarildi!";
+    document.getElementById("alert_body").innerHTML="Pdf fayl saqlandi !!";
+    document.getElementById("dynamic_bg").className +="alert alert-success";
+  document.getElementById('show_alert').click();
+}
+
+    }
+  }
+
+    var url = "{% url 'books:admin_order_pdf' %}";
+     var url = url+"?value="+value;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.send(); 
+
+  }
+
+
+
+ function BotSendPdf(delivery_id){
+  console.log(delivery_id);
+    var value = delivery_id;
+    var loading = document.getElementById('blocked').style='display:block';
+    document.getElementById('loading_title').innerHTML="Ma'lumot bot orqali jo'natilmoqda <br>Iltimos internet tarmog'idan uzilmang";
+       if (window.XMLHttpRequest) {
+    // code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+  } else {  // code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    var data = JSON.parse(this.responseText);
+console.log(data);
+if(data.status == 'ok'){
+
+    var loading = document.getElementById('blocked').style='display:none';
+    var pdfbutton = document.getElementById('pdfbot').style='opacity:0.5;';
+    document.getElementById('pdfbutton').style='opacity:0.5;';
+     document.getElementById("alert_title").innerHTML="Bajarildi!";
+    document.getElementById("alert_body").innerHTML="Pdf fayl bot orqali jo'natildi !!";
+    document.getElementById("dynamic_bg").className +="alert alert-success";
+  document.getElementById('show_alert').click();
+}
+
+    }
+  }
+
+    var url = "{% url 'books:send_add_pdf' %}";
+     var url = url+"?value="+value;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.send(); 
+ 
+ } 
+</script>
+
+
+
+
+<div class="content-blocker" id="blocked">
+  <center style="margin-top:200px;" id="loading">
+    <h3><font color="white" style="font-weight:bold;" id="loading_title">Ma'lumot pdf faylga generatsiya qilinmoqda <br>Iltimos bir oz kuting !</font></h3>
+<div class="lds-ring"><div></div><div></div><div></div></div>
+
+</center>  
+</div>
+  <style>
+    .content-blocker {
+      display:none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(136, 136, 204, 0.8);
+      z-index: 4444;
+    }
+  </style>
+  <script>
+function CloseToast(){
+  document.getElementById('blocked').style="display:none;";
+}
+  </script>
+
+  <style>
+    .lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+  </style>
   {% endblock %}

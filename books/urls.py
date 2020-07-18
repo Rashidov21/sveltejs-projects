@@ -16,5 +16,11 @@ urlpatterns = [
     path('page/<str:page_name>', page_views, name='page_views'),
     path('cart', cart_view, name='cart_view'),
     path('edit_product', edit_product, name='edit_product'),
+    path('edit', edit_info_product, name='edit_info_product'),
+    path('delivery-list', Delivery.as_view(), name='delivery'),
+    path('delivery-product-list/<int:delivery_id>', delivery_products, name='delivery_product_list'),
+    path('admin_order_pdf', admin_order_pdf, name='admin_order_pdf'),
+    path('print/list/<int:delivery_id>', print_me, name='print_me'),
+    path('send/list/pdf', send_add_pdf, name='send_add_pdf'),
  
 ]

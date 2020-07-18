@@ -11,7 +11,11 @@ class Settings(models.Model):
 	view_products_count_no = models.BooleanField("Omborda tugagan tovarlar ko'rsatilsin",default=True)
 	view_products_check_no = models.BooleanField("Tekshirilmagan tovarlar ko'rsatilsin",default=True)
 	add_products_for_one_provider_at_one_day_with_one_list = models.BooleanField("1kun ich. 1ta provider",default=True)
-
+	bot_auto_send  = models.BooleanField(default=True)
+	bot_send_add_list  = models.BooleanField(default=True)
+	bot_send_order_list  = models.BooleanField(default=True)
+	bot_auto_send_updates  = models.BooleanField(default=True)
+	bot_auto_send_product_count  = models.BooleanField(default=True)
 
 class Client(models.Model):
 	name = models.CharField("Nomi", max_length=75)
@@ -27,3 +31,5 @@ class Client(models.Model):
 
 	class Meta:
 		ordering = ['-id']
+
+

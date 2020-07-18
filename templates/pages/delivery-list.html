@@ -18,7 +18,7 @@
             </nav>
 
             <div class="pb-3">
-              <h1> So'ngi tovarlar ro'yhati</h1>
+              <h1> So'ngi kiruvchi tovarlar ro'yhati</h1>
             </div>
         
               <div class="row">
@@ -51,6 +51,7 @@
                     <div class="card-header-title">Ro'yhatga olingan tovarlar</div>
                   </div>
                   <div class="table-responsive-sm">
+                    {% if page_object %}
                     <table class="table table-actions table-striped table-hover mb-0">
                       <thead>
                         <tr class="text-center">
@@ -70,6 +71,7 @@
                         </tr>
                       </thead>
                       <tbody style="color:black;font-weight:700;">
+                            {% for p in page_object %}
                           <tr class="text-center">
                           <th scope="row">
                             <label class="custom-control custom-checkbox m-0 p-0">
@@ -77,18 +79,24 @@
                               <span class="custom-control-indicator"></span>
                             </label>
                           </th>
-                          <td>NUR ZIYO MCHJ</td>
-                          <td><b>08/08/2020</b></td>
-                          <td>65</td>
-                          <td style="color:blue;"><b>UZS </b>445.000</td>
-                          <td>Abdullo Abdullayev </td>
+                          <td>{{ p.provider}}</td>
+                          <td><b>{{ p.day}}-{{ p.month }} {{ p.year }}</b></td>
+                          <td>{{ p.quantity }}</td>
+                          <td style="color:blue;">{{ p.summa }} <i>uzs</i></td>
+                          <td>{{ p.check_by }}</td>
                           <td style="color:blue;">
                             <i data-feather="check"></i>
                           </td>
-                          <td><a href="{% url 'books:page_views' 'delivery-product-list' %}"><button type="button" class="btn btn-sm btn-outline-success"><i data-feather="eye"></i></button></a></td>
+                          <td><a href="{% url 'books:delivery_product_list' p.id %}"><button type="button" class="btn btn-sm btn-outline-success"><i data-feather="eye"></i></button></a></td>
                         </tr>
+                        {% endfor %}
                       </tbody>
                     </table>
+                    {% else %}
+                    <div class="text-center">
+                      <h3>Xozircha ma'lumot topilmadi</h3>
+                    </div>
+                    {% endif %}
                   </div>
                   <div class="card-footer">
                      <div class="pagination ml-2">

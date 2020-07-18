@@ -8,6 +8,12 @@ def image_folder(instance, filename):
 	filename = instance.title +'.'+filename.split('.')[1]
 	return"{0}/{1}".format(instance.title, filename)
 
+def pdf_uploader(instance, filename):
+	formate = filename.split('.')[1]
+	filename = "{0}_{1}_{2}_{3}.{4}".format(instance.provider.name,instance.day,instance.month,instance.year,formate)
+	return filename	
+
+
 class Position(models.Model):
 	name = models.CharField("Lavozim", max_length=50)
 	def __str__(self):
@@ -17,6 +23,7 @@ class UserAccount(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,null=True)
 	position = models.ForeignKey(Position,on_delete=models.PROTECT,null=True, blank=True)
 	name = models.CharField('Ismi',max_length=25)
+	telegram_id = models.PositiveIntegerField(default=0,blank=True)
 	last_name = models.CharField('Familyasi',max_length=25)
 	adres = models.CharField(max_length=355,blank=True)
 	info = models.TextField(max_length=555,blank=True)
@@ -26,7 +33,7 @@ class UserAccount(models.Model):
 	status = models.BooleanField(default=True)
 
 	def __str__(self):
-		return self.name
+		return "{0} {1}".format(self.name,self.last_name)
 
 
 
@@ -135,6 +142,12 @@ class AddProductArchive(models.Model):
 	quantity = models.PositiveIntegerField('Soni',default=0)
 	summa = models.PositiveIntegerField('Summa',default=0)
 	add_date = models.DateTimeField(auto_now_add=True)
+	pdf = models.FileField(upload_to=pdf_uploader,blank=True)
+	send_bot = models.BooleanField(default=False)
+	save_as_folder = models.BooleanField(default=False)
+
+	class Meta:
+		ordering = ['-id']
 
 
 

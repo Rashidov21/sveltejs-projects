@@ -1,0 +1,71 @@
+    <!DOCTYPE html>
+<html>
+<head>
+<title>{{ delivery.provider.name }} dan  qabul qilingan tovarlar</title>
+ 
+     <link rel="stylesheet" type="text/css" href="/static/dist/css/bootstrap.min.css" media="screen" />
+ </head>
+ <body>
+ 
+
+  <div class="container-fluid mt-2">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-center">
+          <h5><tt>{{ delivery.provider.name }}</tt> dan  qabul qilingan tovarlar</h5>
+        </div>
+       
+        <div class="row">
+          <div class="col-md-6 mt-2 mb-2">
+          <h5>Sana :<tt>{{ delivery.day}}-{{ delivery.month}}{{ delivery.year}}</tt></h5>
+          </div>
+          <div class="col-md-6 mt-2 mb-2">
+            <h5>Qabul qildi: <tt>{{ delivery.check_by }}</tt></h5>
+          </div>
+        </div>
+       
+        <table class="table table-bordered mt-2">
+  <thead>
+    <tr class="text-center">
+      <th>Tartib raqami</th>
+      <th>Nomi</th>
+      <th>Kategoriyasi</th>
+      <th>Narxi 1 dona uchun</th>
+      <th>Soni</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      {% for p in page_object %}
+      <tr class="text-center">
+      
+        <td>{{ forloop.counter }}</td>
+        <td>{{ p.title }}</td>
+        <td>{{ p.category }}</td>
+        <td>{{ p.pur_price }}<i>uzs </i></td>
+        <td>{{ p.quantity }} ta</td>
+
+
+      </tr>
+      {% endfor %}
+   
+  </tbody>
+</table>
+<div class="price float-right" style="float:right">
+  <h5><tt>Umumiy summa : {{ delivery.summa }}<i>uzs</i></tt></h5>
+</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+ window.onload = print_doc();
+  function print_doc(){
+  
+window.print();
+}
+
+
+</script>
+  </body> 
+</html>
