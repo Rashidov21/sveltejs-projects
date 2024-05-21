@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 from product.models import Settings
-
+from django_model_changes import ChangesMixin
 
 def image_folder(instance, filename):
 	filename = instance.title +'.'+filename.split('.')[1]
@@ -95,7 +95,7 @@ class KeyWord(models.Model):
 
 
 
-class Product(models.Model):
+class Product(ChangesMixin,models.Model):
 	category = models.ForeignKey(Category, on_delete = models.CASCADE,verbose_name='Kategoriyasi')		
 	subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT, verbose_name="SubKategoriya ",blank=True, null=True)		
 	added_by = models.ForeignKey(UserAccount,related_name = 'added_by', on_delete=models.PROTECT, verbose_name="Qo'shdi",blank=True, null=True)		

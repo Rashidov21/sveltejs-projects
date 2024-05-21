@@ -16,7 +16,7 @@ month = generator_month(cur_month)
 from io import BytesIO
 from django.conf import settings
 from django.template.loader import render_to_string
-import weasyprint
+# import weasyprint
 import os
 from django.core.files import File
 
@@ -153,7 +153,7 @@ def admin_order_pdf(request,bot=None):
 	html = render_to_string('to_print/tovar_kirim.html', context)
 	out = BytesIO()
 	stylesheets=[weasyprint.CSS(settings.STATIC_ROOT +'/dist/css/bootstrap.min.css')]
-	weasyprint.HTML(string=html).write_pdf(out, stylesheets=stylesheets)
+	# weasyprint.HTML(string=html).write_pdf(out, stylesheets=stylesheets)
 	path = os.path.abspath('/home/ibroxim/Документы')
 	formate = 'pdf'
 	name = "{0}_{1}_{2}_{3}.{4}".format(delivery.provider.name,delivery.day,delivery.month,delivery.year,formate)
